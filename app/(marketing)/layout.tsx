@@ -13,10 +13,10 @@ export default async function MarketingLayout({
 }: MarketingLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col ">
-      <Suspense fallback="...">
+      <div>
         <Banner />
         <NavBar items={marketingConfig.mainNav} scroll={true} />
-      </Suspense>
+      </div>
       <main className="flex-1">{children}</main>
     </div>
   );
