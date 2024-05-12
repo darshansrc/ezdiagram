@@ -9,6 +9,7 @@ import {
   CreditCard,
   File,
   FileText,
+  Workflow,
   HelpCircle,
   Image,
   Laptop,
@@ -25,6 +26,7 @@ import {
   Trash,
   User,
   X,
+  LayoutDashboard,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -36,10 +38,12 @@ export const Icons = {
   billing: CreditCard,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
+  layoutDashboard: LayoutDashboard,
   check: Check,
   close: X,
   copy: Copy,
   ellipsis: MoreVertical,
+  workflow: Workflow,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

@@ -9,7 +9,8 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/shared/icons";
 import { MobileNav } from "@/components/layout/mobile-nav";
-import { Workflow } from "lucide-react";
+import { Ellipsis, Workflow } from "lucide-react";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -71,8 +72,12 @@ export function MainNav({ items, children }: MainNavProps) {
         className="flex items-center space-x-2 md:hidden"
         onClick={toggleMobileMenu}
       >
-        {showMobileMenu ? <Icons.close /> : <Icons.logo />}
-        <span className="font-bold">Menu</span>
+        {showMobileMenu ? (
+          <Cross1Icon className="size-4" />
+        ) : (
+          <Workflow size={24} />
+        )}
+        <span className="font-bold">{siteConfig.name}</span>
       </button>
       {showMobileMenu && items && (
         <MobileNav items={items}>{children}</MobileNav>

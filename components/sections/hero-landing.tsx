@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { cn, nFormatter } from "@/utils/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
+import { ArrowRight } from "lucide-react";
 
 export async function HeroLanding() {
   return (
@@ -13,12 +14,13 @@ export async function HeroLanding() {
         <Link
           href="https://twitter.com/miickasmt/status/1719892161095745801"
           className={cn(
-            buttonVariants({ variant: "outline", size: "sm", rounded: "full" }),
-            "px-4"
+            buttonVariants({ variant: "outline", size: "sm" }),
+            "px-4 rounded-full"
           )}
           target="_blank"
         >
-          <span className="mr-3">🎉</span> Introducing support for Claude
+          <span className="mr-3">🎉</span> Introducing support for Claude{" "}
+          <ArrowRight className="size-4 pl-1" />
         </Link>
 
         <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
@@ -41,12 +43,9 @@ export async function HeroLanding() {
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
           <Link
-            href="/pricing"
+            href="/dashboard"
             prefetch={true}
-            className={cn(
-              buttonVariants({ size: "lg", rounded: "full" }),
-              "gap-2"
-            )}
+            className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
           >
             <span>Start Editing</span>
             <Icons.arrowRight className="size-4" />
