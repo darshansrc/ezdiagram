@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { AuthModal } from "@/components/auth/auth-modal";
+import dynamic from "next/dynamic";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -55,10 +56,12 @@ export const metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  // manifest: `${siteConfig.url}/site.webmanifest`,
+  manifest: `${siteConfig.url}/site.webmanifest`,
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const CrispWithNoSSR = dynamic(() => import("../scripts/crisp.js"));
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -79,6 +82,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
           <AuthModal />
           <Toaster />
+          <CrispWithNoSSR />
         </ThemeProvider>
       </body>
     </html>
