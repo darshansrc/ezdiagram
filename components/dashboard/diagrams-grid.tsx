@@ -2,7 +2,7 @@
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,12 +20,10 @@ import { Skeleton } from "../ui/skeleton";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useRouter } from "next/navigation";
 
 export type Diagram = Tables<"diagrams">;
 
@@ -42,6 +40,7 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
+  const router = useRouter();
 
   const currentDiagrams = diagrams?.slice(startIndex, endIndex) || [];
 
@@ -52,9 +51,13 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
   return (
     <>
       <div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pt-0">
           {currentDiagrams.map((diagram) => (
-            <Card key={diagram.id} className="mb-4 bg-background">
+            <Card
+              key={diagram.id}
+              onClick={() => router.push(`/dashboard/${diagram.id}`)}
+              className=" bg-background  cursor-pointer hover:shadow-md transition-shadow duration-300 ease-in-out dark:hover:shadow-neutral-950  rounded-lg"
+            >
               <AspectRatio
                 ratio={16 / 9}
                 className="overflow-hidden p-2 rounded-lg"
@@ -65,11 +68,11 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                   <MermaidPreview chart={diagram.code as string} />
                 </Suspense>
               </AspectRatio>
-              <CardContent className="flex flex-row items-center justify-between gap-2 pt-3">
+              <div className="flex px-6 pb-2 flex-row items-center justify-between gap-2 pt-3">
                 {diagram.diagram_name}
                 <Badge variant="outline">{diagram.diagram_language}</Badge>
-              </CardContent>
-              <CardFooter className="flex flex-row justify-between items-center gap-2 py-2">
+              </div>
+              <div className="flex px-6 flex-row justify-between items-center gap-2 mt-0 my-0 pt-0 pb-2">
                 <p className="text-muted-foreground text-sm">
                   {timesago(diagram.last_updated_at as string)}
                 </p>
@@ -84,7 +87,7 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem className="flex items-center space-x-2.5">
                       <Pencil className="size-3" />
-                      <p className="text-sm">Edit</p>
+                      <p className="text-sm">Rename</p>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="flex items-center space-x-2.5">
                       <Trash2 className="size-3" />
@@ -92,40 +95,31 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </CardFooter>
+              </div>
             </Card>
           ))}
         </div>
       </div>
       <div>
         {totalPages > 1 && (
-          <div className=" pb-20  ">
-            <Pagination>
+          <div className=" mb-20 flex flex-row items-center justify-between ">
+            <Pagination className="flex-end flex w-full justify-end">
               <PaginationContent>
-                <PaginationItem>
+                <Button variant={"ghost"} disabled={currentPage === 1}>
                   <PaginationPrevious
+                    className="px-0"
                     onClick={() => handlePageChange(currentPage - 1)}
                   />
-                </PaginationItem>
-                <div className="max-w-[100px] md:max-w-md lg:max-w-lg flex flex-row overflow-x-scroll">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          isActive={page === currentPage}
-                          onClick={() => handlePageChange(page)}
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    )
-                  )}
+                </Button>
+                <div className="flex-1  items-center  inline-block  text-sm text-muted-foreground text-ellipsis">
+                  {currentPage} / {totalPages}
                 </div>
-                <PaginationItem>
+                <Button variant={"ghost"} disabled={currentPage === totalPages}>
                   <PaginationNext
+                    className="px-0"
                     onClick={() => handlePageChange(currentPage + 1)}
                   />
-                </PaginationItem>
+                </Button>
               </PaginationContent>
             </Pagination>
           </div>

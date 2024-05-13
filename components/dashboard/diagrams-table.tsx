@@ -64,10 +64,10 @@ export default function DiagramsList({ diagrams }: DiagramsListProps) {
 
   return (
     <div>
-      <Table className="mb-10">
+      <Table className="">
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
+            <TableHead>Diagram Name</TableHead>
             <TableHead>Language</TableHead>
             <TableHead>Last edited</TableHead>
             <TableHead>
@@ -77,9 +77,11 @@ export default function DiagramsList({ diagrams }: DiagramsListProps) {
         </TableHeader>
         <TableBody>
           {currentDiagrams.map((diagram) => (
-            <TableRow key={diagram.id}>
+            <TableRow key={diagram.id} className="cursor-pointer">
               <TableCell className="font-medium">
-                {diagram.diagram_name}
+                <Button className="" variant={"link"}>
+                  {diagram.diagram_name}
+                </Button>
               </TableCell>
               <TableCell>
                 <Badge variant="outline">{diagram.diagram_language}</Badge>
@@ -95,7 +97,7 @@ export default function DiagramsList({ diagrams }: DiagramsListProps) {
                     </Button>
                   </HoverCardTrigger>
                   <HoverCardContent
-                    className="w-80 bg-background overflow-hidden"
+                    className=" bg-background p-0 m-0 border-none overflow-hidden"
                     side={"left"}
                   >
                     <Suspense>
@@ -129,33 +131,24 @@ export default function DiagramsList({ diagrams }: DiagramsListProps) {
         </TableBody>
       </Table>
       {totalPages > 1 && (
-        <div className="mt-4 flex justify-center">
-          <Pagination>
+        <div className=" mb-20 flex flex-row items-center justify-between ">
+          <Pagination className="flex-end flex w-full justify-end">
             <PaginationContent>
-              <PaginationItem>
+              <Button variant={"ghost"} disabled={currentPage === 1}>
                 <PaginationPrevious
+                  className="px-0"
                   onClick={() => handlePageChange(currentPage - 1)}
                 />
-              </PaginationItem>
-              <div className="max-w-3xl flex flex-row overflow-x-scroll">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (page) => (
-                    <PaginationItem key={page}>
-                      <PaginationLink
-                        isActive={page === currentPage}
-                        onClick={() => handlePageChange(page)}
-                      >
-                        {page}
-                      </PaginationLink>
-                    </PaginationItem>
-                  )
-                )}
+              </Button>
+              <div className="flex-1  items-center  inline-block  text-sm text-muted-foreground text-ellipsis">
+                {currentPage} / {totalPages}
               </div>
-              <PaginationItem>
+              <Button variant={"ghost"} disabled={currentPage === totalPages}>
                 <PaginationNext
+                  className="px-0"
                   onClick={() => handlePageChange(currentPage + 1)}
                 />
-              </PaginationItem>
+              </Button>
             </PaginationContent>
           </Pagination>
         </div>

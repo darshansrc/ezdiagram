@@ -22,7 +22,7 @@ const MermaidPreview = async ({ chart }: MermaidPreviewProps) => {
   }, [theme]);
 
   return (
-    <div className="mermaid  rounded-lg h-64 overflow-hidden max-h-64 bg-muted/50 text-muted/50 ">
+    <div className="mermaid  rounded-lg h-64 overflow-hidden max-h-64 bg-muted/50 text-[0px] ">
       {chart}
     </div>
   );

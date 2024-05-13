@@ -1,11 +1,7 @@
 "use client";
-import { notFound } from "next/navigation";
-
 import { DashboardNav } from "@/components/layout/nav";
 import { NavBar } from "@/components/layout/navbar";
-import { SiteFooter } from "@/components/sections/site-footer";
 import { dashboardConfig } from "@/config/dashboard";
-import useUserStore from "@/store/user-store";
 import Banner from "@/components/sections/banner";
 
 interface DashboardLayoutProps {
@@ -13,16 +9,9 @@ interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { user } = useUserStore();
-
-  if (!user) {
-    return notFound();
-  }
-
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <div>
-        <Banner />
         <NavBar items={dashboardConfig.mainNav} scroll={false} border={false} />
       </div>
 

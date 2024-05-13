@@ -10,6 +10,7 @@ import { UserAccountNav } from "./user-account-nav";
 import useAuthModal from "@/store/auth-modal-store";
 import useUser from "@/store/user-store";
 import { useMounted } from "@/hooks/use-mounted";
+import { ModeToggle } from "./mode-toggle";
 
 interface NavBarProps {
   items?: MainNavItem[];
@@ -48,7 +49,10 @@ export function NavBar({
           {rightElements}
 
           {user ? (
-            <UserAccountNav user={user} />
+            <>
+              <ModeToggle />
+              <UserAccountNav user={user} />
+            </>
           ) : (
             mounted && (
               <Button

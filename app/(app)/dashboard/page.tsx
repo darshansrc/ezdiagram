@@ -1,28 +1,17 @@
 "use client";
-
-import { redirect } from "next/navigation";
-import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { Button } from "@/components/ui/button";
-import useUserStore from "@/store/user-store";
 import { LayoutGrid, List, PlusIcon } from "lucide-react";
-import Diagrams from "@/components/dashboard/diagrams-table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useDiagramStore from "@/store/diagram-store";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import useDashboardView from "@/store/dashboard-view-store";
 import DiagramsGrid from "@/components/dashboard/diagrams-grid";
 import DiagramsList from "@/components/dashboard/diagrams-table";
 
 export default function DashboardPage() {
-  const { user, isLoading } = useUserStore();
-  if (!user && !isLoading) {
-    redirect("/");
-  }
-
   const { dashboardType, changeDashboardType } = useDashboardView();
-
   const { diagrams, fetchDiagrams } = useDiagramStore();
 
   useEffect(() => {
