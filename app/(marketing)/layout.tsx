@@ -15,7 +15,7 @@ export default async function MarketingLayout({
     <div className="flex min-h-screen flex-col ">
       <div>
         <Banner />
-        <NavBar items={marketingConfig.mainNav} scroll={true} />
+        <NavBar items={marketingConfig.mainNav} scroll={true} border={false} />
       </div>
       <main className="flex-1">{children}</main>
     </div>

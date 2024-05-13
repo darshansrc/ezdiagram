@@ -16,6 +16,7 @@ interface NavBarProps {
   children?: React.ReactNode;
   rightElements?: React.ReactNode;
   scroll?: boolean;
+  border?: boolean;
 }
 
 export function NavBar({
@@ -23,6 +24,7 @@ export function NavBar({
   children,
   rightElements,
   scroll = false,
+  border = true,
 }: NavBarProps) {
   const scrolled = useScroll(50);
   const { user } = useUser();
@@ -32,7 +34,11 @@ export function NavBar({
   return (
     <header
       className={`sticky top-0 z-40 flex w-full justify-center bg-background/60 backdrop-blur-xl transition-all ${
-        scroll ? (scrolled ? "border-b" : "bg-background/0") : "border-b"
+        scroll
+          ? scrolled
+            ? border && "border-b"
+            : "bg-background/0"
+          : border && "border-b"
       }`}
     >
       <div className="container flex h-16 items-center justify-between py-4">

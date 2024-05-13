@@ -32,8 +32,8 @@ const pricingData = [
     title: "Pro",
     free: false,
     prices: {
-      monthly: 6.97,
-      yearly: 47.97,
+      monthly: 7,
+      yearly: 57,
     },
     benefits: [
       "Collab",
@@ -49,8 +49,8 @@ const pricingData = [
     title: "Enterprise",
     free: false,
     prices: {
-      monthly: 17.97,
-      yearly: 107.97,
+      monthly: 17,
+      yearly: 147,
     },
     benefits: [
       "Everything included in Pro",

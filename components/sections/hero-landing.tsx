@@ -24,10 +24,8 @@ export async function HeroLanding() {
         </Link>
 
         <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
-          Unleash the Power of{" "}
-          <span className="text-gradient_indigo-purple font-extrabold">
-            AI Diagramming
-          </span>
+          Generate Diagrams with the help of{" "}
+          <span className="text-gradient_indigo-purple font-extrabold">AI</span>
         </h1>
 
         <p

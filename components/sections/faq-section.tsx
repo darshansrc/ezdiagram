@@ -46,7 +46,7 @@ const pricingFaqData = [
   },
   {
     id: "item-7",
-    question: "Does EzDiagram offer version control or revision history?",
+    question: "Does EzDiagram offer version control?",
     answer:
       "Yes, EzDiagram maintains a revision history for each diagram on browser's local storage, allowing you to view and revert to previous versions if needed.",
   },
