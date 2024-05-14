@@ -41,11 +41,15 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           {/* <span className="text-muted-foreground text-sm">
             Copyright &copy; 2024. All rights reserved.
           </span> */}
-          <p className="text-left text-sm text-muted-foreground">
+          <p className="text-left text-sm text-muted-foreground w-1/3">
             © 2024 EzDiagram. All rights reserved.
           </p>
 
-          <div className="flex items-center gap-3">
+          <p className="text-center text-sm flex justify-center text-muted-foreground w-1/3">
+            Free Plastic 🚮
+          </p>
+
+          <div className="flex items-center justify-end gap-3 w-1/3">
             <ModeToggle />
           </div>
         </div>

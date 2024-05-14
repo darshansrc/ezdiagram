@@ -4,7 +4,7 @@ import { InfoLdg } from "@/types";
 import { cn } from "@/lib/utils";
 
 import { Icons } from "../shared/icons";
-import { AnimatedBeamDemo } from "./animated-card";
+import AnimatedCard from "./animated-card";
 
 interface InfoLandingProps {
   data: InfoLdg;
@@ -45,7 +45,7 @@ export function InfoLanding({ data, reverse = false }: InfoLandingProps) {
             reverse ? "order-1" : "order-2"
           )}
         >
-          <AnimatedBeamDemo />
+          <AnimatedCard />
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ const MermaidPreview = memo(async ({ chart }: MermaidPreviewProps) => {
     });
 
     mermaid.contentLoaded();
-  }, []);
+  }, [theme]);
 
   return (
     <div className="mermaid  rounded-lg h-64 overflow-hidden max-h-64 bg-muted/50 text-[0px] ">
@@ -27,5 +27,5 @@ const MermaidPreview = memo(async ({ chart }: MermaidPreviewProps) => {
     </div>
   );
 });
-
+MermaidPreview.displayName = "MermaidPreview";
 export default MermaidPreview;
