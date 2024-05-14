@@ -5,10 +5,13 @@ import { cn, nFormatter } from "@/utils/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 import { ArrowRight } from "lucide-react";
+import RetroGrid from "../magicui/retro-grid";
+import ShimmerButton from "../magicui/shimmer-button";
 
 export async function HeroLanding() {
   return (
     <section className="space-y-6 py-12 sm:py-20 lg:py-20">
+      <RetroGrid />
       <div className="container flex max-w-5xl flex-col items-center gap-5 text-center">
         {/* Want animations? Check here: https://github.com/mickasmt/next-saas-stripe-starter/blob/76eb9f2b70b29c7a734ff0e5b047796ed2dac28d/app/(marketing)/page.tsx */}
         <Link
@@ -40,14 +43,18 @@ export async function HeroLanding() {
           className="flex justify-center space-x-2 md:space-x-4"
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
-          <Link
+          {/* <Link
             href="/dashboard"
             prefetch={true}
             className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
-          >
-            <span>Start Editing</span>
-            <Icons.arrowRight className="size-4" />
-          </Link>
+          ></Link> */}
+
+          <ShimmerButton className="shadow-2xl  ">
+            <span className="whitespace-pre-wrap text-center flex flex-row items-center gap-2 text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+              <span>Start Editing</span>
+              <Icons.arrowRight className="size-4  " />
+            </span>
+          </ShimmerButton>
         </div>
       </div>
     </section>

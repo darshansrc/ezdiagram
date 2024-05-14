@@ -68,6 +68,10 @@ const config = {
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       keyframes: {
+        grid: {
+          "0%": { transform: "translateY(-50%)" },
+          "100%": { transform: "translateY(0)" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -126,10 +130,33 @@ const config = {
             opacity: "1",
           },
         },
+
+        "spin-around": {
+          "0%": {
+            transform: "translateZ(0) rotate(0)",
+          },
+          "15%, 35%": {
+            transform: "translateZ(0) rotate(90deg)",
+          },
+          "65%, 85%": {
+            transform: "translateZ(0) rotate(270deg)",
+          },
+          "100%": {
+            transform: "translateZ(0) rotate(360deg)",
+          },
+        },
+        slide: {
+          to: {
+            transform: "translate(calc(100cqw - 100%), 0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+
+        "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
+        slide: "slide var(--speed) ease-in-out infinite alternate",
 
         // Fade up and down
         "fade-up": "fade-up 0.5s",
@@ -138,6 +165,8 @@ const config = {
         // Fade in and out
         "fade-in": "fade-in 0.4s",
         "fade-out": "fade-out 0.4s",
+
+        grid: "grid 15s linear infinite",
       },
     },
   },

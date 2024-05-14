@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LayoutGrid, List, PlusIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useDiagramStore from "@/store/diagram-store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useDashboardView from "@/store/dashboard-view-store";
 import DiagramsGrid from "@/components/dashboard/diagrams-grid";
 import DiagramsList from "@/components/dashboard/diagrams-table";
@@ -13,6 +13,8 @@ import DiagramsList from "@/components/dashboard/diagrams-table";
 export default function DashboardPage() {
   const { dashboardType, changeDashboardType } = useDashboardView();
   const { diagrams, fetchDiagrams } = useDiagramStore();
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     fetchDiagrams();

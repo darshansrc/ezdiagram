@@ -1,9 +1,7 @@
 "use client";
-import React, { Fragment, Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import mermaid from "mermaid";
 import { useTheme } from "next-themes";
-import { EmptyPlaceholder } from "../shared/empty-placeholder";
-import { useMounted } from "@/hooks/use-mounted";
 
 interface MermaidPreviewProps {
   chart: string | undefined;
@@ -16,10 +14,11 @@ const MermaidPreview = async ({ chart }: MermaidPreviewProps) => {
     mermaid.initialize({
       theme: theme === "dark" ? "dark" : "default",
       securityLevel: "loose",
+      startOnLoad: false,
     });
 
     mermaid.contentLoaded();
-  }, [theme]);
+  }, []);
 
   return (
     <div className="mermaid  rounded-lg h-64 overflow-hidden max-h-64 bg-muted/50 text-[0px] ">

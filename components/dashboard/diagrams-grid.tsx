@@ -15,7 +15,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tables } from "@/types/database.types";
 import timesago from "@/utils/timesago";
 import MermaidPreview from "./mermaid-preview";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 import {
   Pagination,
@@ -24,6 +24,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useRouter } from "next/navigation";
+import { DeleteDiagram } from "./delete-diagram";
+import { toast } from "sonner";
 
 export type Diagram = Tables<"diagrams">;
 
@@ -41,6 +43,8 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const router = useRouter();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [selectedDiagram, setSelectedDiagram] = useState<string>("");
 
   const currentDiagrams = diagrams?.slice(startIndex, endIndex) || [];
 
@@ -55,11 +59,11 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
           {currentDiagrams.map((diagram) => (
             <Card
               key={diagram.id}
-              onClick={() => router.push(`/dashboard/${diagram.id}`)}
               className=" bg-background  cursor-pointer hover:shadow-md transition-shadow duration-300 ease-in-out dark:hover:shadow-neutral-950  rounded-lg"
             >
               <AspectRatio
                 ratio={16 / 9}
+                onClick={() => router.push(`/dashboard/${diagram.id}`)}
                 className="overflow-hidden p-2 rounded-lg"
               >
                 <Suspense
@@ -69,7 +73,13 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                 </Suspense>
               </AspectRatio>
               <div className="flex px-6 pb-2 flex-row items-center justify-between gap-2 pt-3">
-                {diagram.diagram_name}
+                <Button
+                  variant={"link"}
+                  className="p-0 m-0"
+                  onClick={() => router.push(`/dashboard/${diagram.id}`)}
+                >
+                  {diagram.diagram_name}
+                </Button>
                 <Badge variant="outline">{diagram.diagram_language}</Badge>
               </div>
               <div className="flex px-6 flex-row justify-between items-center gap-2 mt-0 my-0 pt-0 pb-2">
@@ -82,14 +92,23 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-background">
+                  <DropdownMenuContent
+                    align="end"
+                    className="bg-background z-40"
+                  >
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem className="flex items-center space-x-2.5">
                       <Pencil className="size-3" />
                       <p className="text-sm">Rename</p>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center space-x-2.5">
+                    <DropdownMenuItem
+                      className="flex items-center space-x-2.5"
+                      onClick={() => {
+                        setSelectedDiagram(diagram.id as string);
+                        setDeleteDialogOpen(true);
+                      }}
+                    >
                       <Trash2 className="size-3" />
                       <p className="text-sm">Delete</p>
                     </DropdownMenuItem>
@@ -100,6 +119,7 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
           ))}
         </div>
       </div>
+
       <div>
         {totalPages > 1 && (
           <div className=" mb-20 flex flex-row items-center justify-between ">
@@ -125,6 +145,12 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
           </div>
         )}
       </div>
+
+      <DeleteDiagram
+        diagramId={selectedDiagram}
+        deleteDialogOpen={deleteDialogOpen}
+        setDeleteDialogOpen={setDeleteDialogOpen}
+      />
     </>
   );
 }

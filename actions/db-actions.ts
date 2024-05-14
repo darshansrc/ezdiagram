@@ -29,3 +29,15 @@ export async function getAllDiagrams(): Promise<Diagram[] | null> {
 
   return null;
 }
+
+export async function deleteDiagram(id: string): Promise<boolean | string> {
+  const supabase = createClient();
+
+  const { error } = await supabase.from("diagrams").delete().eq("id", id);
+
+  if (error) {
+    return error.message;
+  }
+
+  return true;
+}

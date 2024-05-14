@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { AuthModal } from "@/components/auth/auth-modal";
 import dynamic from "next/dynamic";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
           <AuthModal />
           <Toaster />
+          <Sonner />
           <CrispWithNoSSR />
         </ThemeProvider>
       </body>
