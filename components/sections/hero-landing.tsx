@@ -48,13 +48,14 @@ export async function HeroLanding() {
             prefetch={true}
             className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
           ></Link> */}
-
-          <ShimmerButton className="shadow-2xl  ">
-            <span className="whitespace-pre-wrap text-center flex flex-row items-center gap-2 text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-              <span>Start Editing</span>
-              <Icons.arrowRight className="size-4  " />
-            </span>
-          </ShimmerButton>
+          <Link href="/dashboard" prefetch={false}>
+            <ShimmerButton className="shadow-2xl  ">
+              <span className="whitespace-pre-wrap text-center flex flex-row items-center gap-2 text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
+                Start Editing
+                <Icons.arrowRight className="size-4  " />
+              </span>
+            </ShimmerButton>
+          </Link>
         </div>
       </div>
     </section>

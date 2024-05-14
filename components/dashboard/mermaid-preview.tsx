@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
+
+import React, { useEffect, memo } from "react";
 import mermaid from "mermaid";
 import { useTheme } from "next-themes";
 
@@ -7,14 +8,14 @@ interface MermaidPreviewProps {
   chart: string | undefined;
 }
 
-const MermaidPreview = async ({ chart }: MermaidPreviewProps) => {
+const MermaidPreview = memo(async ({ chart }: MermaidPreviewProps) => {
   const { theme } = useTheme();
 
   useEffect(() => {
     mermaid.initialize({
       theme: theme === "dark" ? "dark" : "default",
       securityLevel: "loose",
-      startOnLoad: false,
+      startOnLoad: true,
     });
 
     mermaid.contentLoaded();
@@ -25,6 +26,6 @@ const MermaidPreview = async ({ chart }: MermaidPreviewProps) => {
       {chart}
     </div>
   );
-};
+});
 
 export default MermaidPreview;
