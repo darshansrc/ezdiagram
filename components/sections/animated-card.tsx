@@ -48,7 +48,7 @@ function AnimatedCard() {
         </div>
         <div className="flex flex-col justify-center">
           <Circle ref={div6Ref} className="h-16 w-16">
-            <Workflow className="h-6 w-6" />
+            <Icons.openai className="h-6 w-6" />
           </Circle>
         </div>
         <div className="flex flex-col justify-center gap-2">

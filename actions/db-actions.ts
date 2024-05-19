@@ -17,7 +17,6 @@ export async function getAllDiagrams(): Promise<Diagram[] | null> {
       .select("*")
       .eq("user_id", user.id)
       .order("last_updated_at", { ascending: false });
-    console.log("fetched diagrams");
 
     if (error) {
       console.error("Error fetching diagrams:", error); // Log potential errors for debugging

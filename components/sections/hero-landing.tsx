@@ -15,7 +15,7 @@ export async function HeroLanding() {
       <div className="container flex max-w-5xl flex-col items-center gap-5 text-center">
         {/* Want animations? Check here: https://github.com/mickasmt/next-saas-stripe-starter/blob/76eb9f2b70b29c7a734ff0e5b047796ed2dac28d/app/(marketing)/page.tsx */}
         <Link
-          href="https://twitter.com/miickasmt/status/1719892161095745801"
+          href="https://chatmermaid.com/blog/claude-support"
           className={cn(
             buttonVariants({ variant: "outline", size: "sm" }),
             "px-4 rounded-full"
@@ -43,19 +43,26 @@ export async function HeroLanding() {
           className="flex justify-center space-x-2 md:space-x-4"
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
-          {/* <Link
+          <Link
             href="/dashboard"
             prefetch={true}
-            className={cn(buttonVariants({ size: "lg" }), "gap-2 rounded-full")}
-          ></Link> */}
-          <Link href="/dashboard" prefetch={false}>
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "gap-2 bg-black dark:bg-white rounded-full"
+            )}
+          >
+            Start Editing
+            <Icons.arrowRight className="size-4  " />
+          </Link>
+
+          {/* <Link href="/dashboard" prefetch={false}>
             <ShimmerButton className="shadow-2xl  ">
               <span className="whitespace-pre-wrap text-center flex flex-row items-center gap-2 text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
                 Start Editing
                 <Icons.arrowRight className="size-4  " />
               </span>
             </ShimmerButton>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </section>
