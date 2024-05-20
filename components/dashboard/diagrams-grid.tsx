@@ -26,6 +26,7 @@ import {
 import { useRouter } from "next/navigation";
 import { DeleteDiagram } from "./delete-diagram";
 import { toast } from "sonner";
+import { RenameDiagram } from "./rename-diagram";
 
 export type Diagram = Tables<"diagrams">;
 
@@ -44,7 +45,11 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const router = useRouter();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
   const [selectedDiagram, setSelectedDiagram] = useState<string>("");
+  const [selectedDiagramName, setSelectedDiagramName] = useState<string | null>(
+    ""
+  );
 
   const currentDiagrams = diagrams?.slice(startIndex, endIndex) || [];
 
@@ -98,7 +103,14 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                   >
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="flex items-center space-x-2.5">
+                    <DropdownMenuItem
+                      className="flex items-center space-x-2.5"
+                      onClick={() => {
+                        setSelectedDiagram(diagram.id as string);
+                        setRenameDialogOpen(true);
+                        setSelectedDiagramName(diagram.diagram_name);
+                      }}
+                    >
                       <Pencil className="size-3" />
                       <p className="text-sm">Rename</p>
                     </DropdownMenuItem>
@@ -109,8 +121,8 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                         setDeleteDialogOpen(true);
                       }}
                     >
-                      <Trash2 className="size-3" />
-                      <p className="text-sm">Delete</p>
+                      <Trash2 className="size-3 text-red-600 " />
+                      <p className="text-sm text-red-600">Delete</p>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -150,6 +162,13 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
         diagramId={selectedDiagram}
         deleteDialogOpen={deleteDialogOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
+      />
+
+      <RenameDiagram
+        diagramId={selectedDiagram}
+        renameDialogOpen={renameDialogOpen}
+        setRenameDialogOpen={setRenameDialogOpen}
+        diagramName={selectedDiagramName}
       />
     </>
   );

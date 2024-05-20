@@ -8,20 +8,25 @@ type Diagram = Tables<"diagrams">;
 
 interface DiagramStore {
   diagrams: Diagram[] | null;
+  isFetching: boolean; // Add this line
   fetchDiagrams: () => void;
   removeDiagram: (id: string) => void;
+  updateDiagramName: (id: string, newName: string) => void;
 }
 
 const useDiagramStore = create<DiagramStore>()(
   persist(
     (set, get) => ({
       diagrams: [],
+      isFetching: false, // Initialize isFetching to false
       fetchDiagrams: async () => {
         try {
+          set({ isFetching: true }); // Set isFetching to true before fetching
           const data = await getAllDiagrams();
-          set({ diagrams: data });
+          set({ diagrams: data, isFetching: false }); // Set diagrams and isFetching to false after fetching
         } catch (error) {
           console.error(error);
+          set({ isFetching: false }); // Set isFetching to false in case of error
         }
       },
       removeDiagram: (id: string) => {
@@ -31,7 +36,20 @@ const useDiagramStore = create<DiagramStore>()(
             (diagram) => diagram.id !== id
           );
           set({ diagrams: newDiagrams });
-          toast("Diagram deleted successfully!");
+          toast(" Diagram deleted successfully!");
+        }
+      },
+      updateDiagramName: (id: string, newName: string) => {
+        const currentDiagrams = get().diagrams;
+        if (currentDiagrams) {
+          const updatedDiagrams = currentDiagrams.map((diagram) => {
+            if (diagram.id === id) {
+              return { ...diagram, diagram_name: newName };
+            }
+            return diagram;
+          });
+          set({ diagrams: updatedDiagrams });
+          toast("Diagram updated successfully!");
         }
       },
     }),

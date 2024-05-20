@@ -40,3 +40,21 @@ export async function deleteDiagram(id: string): Promise<boolean | string> {
 
   return true;
 }
+
+export async function updateDiagramName(
+  id: string,
+  name: string
+): Promise<boolean | string> {
+  const supabase = createClient();
+
+  const { error } = await supabase
+    .from("diagrams")
+    .update({ diagram_name: name })
+    .eq("id", id);
+
+  if (error) {
+    return error.message;
+  }
+
+  return true;
+}

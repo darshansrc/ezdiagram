@@ -13,35 +13,47 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { deleteDiagram } from "@/actions/db-actions";
+import {
+  deleteDiagram,
+  updateDiagramName as updateName,
+} from "@/actions/db-actions";
 import { IconSpinner } from "../ui/icons";
 
 import useDiagramStore from "@/store/diagram-store";
 import { useToast } from "@/components/ui/use-toast";
+import { Input } from "../ui/input";
 
-export function DeleteDiagram({
+export function RenameDiagram({
   diagramId,
-  deleteDialogOpen,
-  setDeleteDialogOpen,
+  renameDialogOpen,
+  setRenameDialogOpen,
+  diagramName,
 }: {
   diagramId: string;
-  deleteDialogOpen: boolean;
-  setDeleteDialogOpen: (open: boolean) => void;
+  renameDialogOpen: boolean;
+  setRenameDialogOpen: (open: boolean) => void;
+  diagramName: string | null;
 }) {
   //   const router = useRouter();
   const [isRemovePending, startRemoveTransition] = React.useTransition();
-  const { removeDiagram } = useDiagramStore();
+  const { updateDiagramName, removeDiagram } = useDiagramStore();
   const { toast } = useToast();
+  const [newName, setNewName] = React.useState<string>("");
+
+  console.log(diagramId, diagramName);
 
   return (
     <>
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      <AlertDialog open={renameDialogOpen} onOpenChange={setRenameDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>Rename Diagram</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete your Diagram and remove your data
-              from our servers.
+              <Input
+                className="rounded-full"
+                defaultValue={diagramName as string}
+                onChange={(e) => setNewName(e.target.value)}
+              />
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -49,17 +61,17 @@ export function DeleteDiagram({
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              className="rounded-full bg-red-600 hover:bg-red-700 text-white"
+              className="rounded-full "
               disabled={isRemovePending}
               onClick={(event) => {
                 event.preventDefault();
                 // @ts-ignore
                 startRemoveTransition(async () => {
                   try {
-                    await deleteDiagram(diagramId);
-                    removeDiagram(diagramId);
+                    await updateName(diagramId, newName);
+                    updateDiagramName(diagramId, newName);
 
-                    setDeleteDialogOpen(false);
+                    setRenameDialogOpen(false);
                   } catch (e) {
                     console.error(e);
                   }
@@ -67,7 +79,7 @@ export function DeleteDiagram({
               }}
             >
               {isRemovePending && <IconSpinner className="mr-2 animate-spin" />}
-              Delete
+              Save
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -37,3 +37,20 @@ export async function sendMagicLink(email: string) {
 
   return { data, error };
 }
+
+export async function updateName(name: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.updateUser({
+    data: {
+      name: name,
+    },
+  });
+
+  if (error) {
+    console.error("Error updating name:", error);
+    return error.message;
+  }
+
+  return data;
+}
