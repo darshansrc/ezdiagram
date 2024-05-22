@@ -77,7 +77,7 @@ const navItems = [
 ];
 
 function EditorDashboard({ diagram }: { diagram: Diagram }) {
-  const { currentTab, setCurrentTab } = useTabStore<Tab>();
+  const { currentTab, setCurrentTab } = useTabStore();
   const { setDiagramCode } = useDiagramCodeStore();
   const { setDiagramConfig } = useDiagramConfigStore();
   const { isSaving } = useIsSavingStore();
