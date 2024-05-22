@@ -2,11 +2,11 @@ import { BackgroundVariant } from "reactflow";
 import create from "zustand";
 import { persist } from "zustand/middleware";
 
+export type Tab = "ai" | "code" | "config" | "notes" | "saved" | "settings";
+
 interface TabStore {
-  currentTab: "ai" | "code" | "config" | "notes" | "saved" | "settings";
-  setCurrentTab: (
-    tab: "ai" | "code" | "config" | "notes" | "saved" | "settings"
-  ) => void;
+  currentTab: Tab;
+  setCurrentTab: (tab: Tab) => void;
 }
 
 export const useTabStore = create(

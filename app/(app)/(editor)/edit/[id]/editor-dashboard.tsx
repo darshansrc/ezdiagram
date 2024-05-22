@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import { ModeToggle } from "@/components/layout/mode-toggle";
 import {
+  Tab,
   useDiagramCodeStore,
   useDiagramConfigStore,
   useIsSavingStore,
@@ -76,7 +77,7 @@ const navItems = [
 ];
 
 function EditorDashboard({ diagram }: { diagram: Diagram }) {
-  const { currentTab, setCurrentTab } = useTabStore();
+  const { currentTab, setCurrentTab } = useTabStore<Tab>();
   const { setDiagramCode } = useDiagramCodeStore();
   const { setDiagramConfig } = useDiagramConfigStore();
   const { isSaving } = useIsSavingStore();
@@ -88,7 +89,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
 
   const mounted = useMounted();
 
-  const renderTabContent = (currentTab: string) => {
+  const renderTabContent = (currentTab: Tab) => {
     switch (currentTab) {
       case "ai":
         return <AIEditor />;
@@ -128,7 +129,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
                         currentTab === item.tab ? "bg-muted" : ""
                       }`}
                       aria-label={item.label}
-                      onClick={() => setCurrentTab(item.tab)}
+                      onClick={() => setCurrentTab(item?.tab as Tab)}
                     >
                       {item.icon}
                     </Button>
