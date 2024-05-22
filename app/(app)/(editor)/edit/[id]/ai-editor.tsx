@@ -2,15 +2,12 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAITabStore } from "@/store/editor-store";
 import {
-  Bird,
   CornerDownLeft,
   MessageSquareCode,
   Mic,
   Paperclip,
   Plus,
-  Rabbit,
   RefreshCcw,
-  Turtle,
 } from "lucide-react";
 import {
   Tooltip,
@@ -29,7 +26,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Icons } from "@/components/shared/icons";
 import { IconOpenAI } from "@/components/ui/icons";
 import { Switch } from "@/components/ui/switch";
 

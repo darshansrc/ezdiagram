@@ -1,23 +1,55 @@
-import { useDiagramConfigStore } from "@/store/editor-store";
-import React from "react";
+import { useDiagramConfigStore, useIsSavingStore } from "@/store/editor-store";
+import React, { useEffect, useRef, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
 import { useTheme } from "next-themes";
+import { updateDiagramConfig } from "@/actions/db-actions";
 
-const ConfigEditor = () => {
+const ConfigEditor = ({ diagramId }: { diagramId: string }) => {
   const { diagramConfig, setDiagramConfig } = useDiagramConfigStore();
   const { theme } = useTheme();
+  const previousUpdateRef = useRef<string | null>(null);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { setIsSaving } = useIsSavingStore();
+  const [shouldSave, setShouldSave] = useState<boolean>(false);
+
+  const debouncedUpdate = () => {
+    if (previousUpdateRef.current === diagramConfig) return;
+    previousUpdateRef.current = diagramConfig;
+
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+    }
+
+    timeoutIdRef.current = setTimeout(async () => {
+      if (shouldSave) {
+        setIsSaving(true);
+        await updateDiagramConfig(diagramId, diagramConfig);
+        setIsSaving(false);
+        setShouldSave(false);
+        timeoutIdRef.current = null;
+      }
+    }, 2000);
+  };
+
+  useEffect(() => {
+    debouncedUpdate();
+  }, [diagramConfig]);
+
   return (
     <div className=" h-full w-full flex relative flex-col">
       <CodeMirror
         value={diagramConfig}
         minHeight="100%"
         minWidth="100%"
-        className="w-full h-[calc(100vh-50px)] border-none active:outline-none   text-[12px] "
+        className="w-full h-[calc(100vh-50px)] border-none active:outline-none text-[12px] "
         lang="mermaid"
         extensions={[langs.mermaid()]}
-        onChange={setDiagramConfig}
+        onChange={(value) => {
+          setDiagramConfig(value);
+          setShouldSave(true);
+        }}
         height="100%"
         theme={
           theme === "dark"

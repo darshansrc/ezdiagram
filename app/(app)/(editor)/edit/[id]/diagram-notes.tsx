@@ -5,26 +5,26 @@ import "@blocknote/mantine/style.css";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useState } from "react";
 
-async function saveToStorage(jsonBlocks: Block[]) {
-  // Save contents to local storage. You might want to debounce this or replace
-  // with a call to your API / database.
-  localStorage.setItem("editorContent", JSON.stringify(jsonBlocks));
-}
-
-async function loadFromStorage() {
-  // Gets the previously stored editor contents.
-  const storageString = localStorage.getItem("editorContent");
-  return storageString
-    ? (JSON.parse(storageString) as PartialBlock[])
-    : undefined;
-}
-
-export default function DiagramNotes() {
+export default function DiagramNotes({ diagramId }: { diagramId: string }) {
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | "loading"
   >("loading");
 
   const { theme } = useTheme();
+
+  async function saveToStorage(jsonBlocks: Block[]) {
+    // Save contents to local storage. You might want to debounce this or replace
+    // with a call to your API / database.
+    localStorage.setItem(diagramId, JSON.stringify(jsonBlocks));
+  }
+
+  async function loadFromStorage() {
+    // Gets the previously stored editor contents.
+    const storageString = localStorage.getItem(diagramId);
+    return storageString
+      ? (JSON.parse(storageString) as PartialBlock[])
+      : undefined;
+  }
 
   // Loads the previously stored editor contents.
   useEffect(() => {
@@ -49,11 +49,11 @@ export default function DiagramNotes() {
 
   // Renders the editor instance.
   return (
-    <div className="h-[calc(100vh-50px)] w-full pt-8  ">
+    <div className="h-[calc(100vh-50px)]  w-full pt-8 overflow-scroll dark:bg-[#1f1f1f]  ">
       <BlockNoteView
         editor={editor}
         data-theming-css-demo
-        className="font-inter dark:bg-neutral-900 "
+        className="font-inter"
         theme={
           theme === "dark" ? "dark" : theme === "light" ? "light" : "light"
         }

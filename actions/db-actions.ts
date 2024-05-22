@@ -58,3 +58,55 @@ export async function updateDiagramName(
 
   return true;
 }
+
+export async function getDiagram(id: string): Promise<Diagram | string> {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("diagrams")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    return error.message;
+  }
+
+  return data;
+}
+
+export async function updateDiagramCode(id: string, code: string) {
+  const supabase = createClient();
+
+  await supabase.auth.getUser();
+
+  const { data, error } = await supabase
+    .from("diagrams")
+    .update({ code: code, last_updated_at: new Date() })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    return error.message;
+  }
+
+  return data;
+}
+
+export async function updateDiagramConfig(id: string, config: string) {
+  const supabase = createClient();
+
+  await supabase.auth.getUser();
+
+  const { data, error } = await supabase
+    .from("diagrams")
+    .update({ config: config, last_updated_at: new Date() })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    return error.message;
+  }
+
+  return data;
+}

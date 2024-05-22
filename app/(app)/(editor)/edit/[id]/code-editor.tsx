@@ -1,23 +1,57 @@
-import { useDiagramCodeStore } from "@/store/editor-store";
-import React from "react";
+import { useDiagramCodeStore, useIsSavingStore } from "@/store/editor-store";
+import React, { useEffect, useRef, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
 import { useTheme } from "next-themes";
+import { updateDiagramCode } from "@/actions/db-actions";
+import { toast } from "sonner";
 
-const CodeEditor = () => {
+const CodeEditor = ({ diagramId }: { diagramId: string }) => {
   const { diagramCode, setDiagramCode } = useDiagramCodeStore();
   const { theme } = useTheme();
+  const previousUpdateRef = useRef<string | null>(null);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { setIsSaving } = useIsSavingStore();
+  const [shouldSave, setShouldSave] = useState<boolean>(false);
+
+  const debouncedUpdate = () => {
+    if (previousUpdateRef.current === diagramCode) return;
+    previousUpdateRef.current = diagramCode;
+
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+    }
+
+    timeoutIdRef.current = setTimeout(async () => {
+      if (shouldSave) {
+        setIsSaving(true);
+        await updateDiagramCode(diagramId, diagramCode);
+        setIsSaving(false);
+        setShouldSave(false);
+      }
+
+      timeoutIdRef.current = null;
+    }, 2000);
+  };
+
+  useEffect(() => {
+    debouncedUpdate();
+  }, [diagramCode]);
+
   return (
     <div className=" h-full w-full flex relative flex-col">
       <CodeMirror
         value={diagramCode}
         minHeight="100%"
         minWidth="100%"
-        className="w-full h-[calc(100vh-50px)] border-none active:outline-none   text-[12px] "
+        className="w-full h-[calc(100vh-50px)] border-none active:outline-none text-[12px] "
         lang="mermaid"
         extensions={[langs.mermaid()]}
-        onChange={setDiagramCode}
+        onChange={(value) => {
+          setDiagramCode(value);
+          setShouldSave(true);
+        }}
         height="100%"
         theme={
           theme === "dark"

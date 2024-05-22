@@ -12,6 +12,7 @@ export type Database = {
       diagrams: {
         Row: {
           code: string | null;
+          config: string | null;
           created_at: string;
           diagram_name: string | null;
           diagram_theme: string | null;
@@ -23,6 +24,7 @@ export type Database = {
         };
         Insert: {
           code?: string | null;
+          config: string | null;
           created_at?: string;
           diagram_name?: string | null;
           diagram_theme?: string | null;
@@ -34,6 +36,7 @@ export type Database = {
         };
         Update: {
           code?: string | null;
+          config: string | null;
           created_at?: string;
           diagram_name?: string | null;
           diagram_theme?: string | null;

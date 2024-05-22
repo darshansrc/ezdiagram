@@ -1,5 +1,5 @@
 import { BackgroundVariant } from "reactflow";
-import { create } from "zustand";
+import create from "zustand";
 import { persist } from "zustand/middleware";
 
 interface TabStore {
@@ -95,3 +95,13 @@ export const useReactFlowBackground = create(
     }
   )
 );
+
+interface isSavingStore {
+  isSaving: boolean;
+  setIsSaving: (open: boolean) => void;
+}
+
+export const useIsSavingStore = create<isSavingStore>((set) => ({
+  isSaving: false,
+  setIsSaving: (open: boolean) => set({ isSaving: open }),
+}));
