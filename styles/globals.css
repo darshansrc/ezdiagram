@@ -95,3 +95,11 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+.react-flow__panel.react-flow__attribution {
+  display: none !important;
+}
+
+.bn-container[data-theming-css-demo] * {
+  background-color: var(--background);
+}

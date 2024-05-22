@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tables } from "@/types/database.types";
 import timesago from "@/utils/timesago";
@@ -68,7 +69,7 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
             >
               <AspectRatio
                 ratio={16 / 9}
-                onClick={() => router.push(`/dashboard/${diagram.id}`)}
+                onClick={() => router.push(`/edit/${diagram.id}`)}
                 className="overflow-hidden p-2 rounded-lg"
               >
                 <Suspense
@@ -81,7 +82,7 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                 <Button
                   variant={"link"}
                   className="p-0 m-0"
-                  onClick={() => router.push(`/dashboard/${diagram.id}`)}
+                  onClick={() => router.push(`/edit/${diagram.id}`)}
                 >
                   {diagram.diagram_name}
                 </Button>

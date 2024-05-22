@@ -82,6 +82,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           {children}
           <AuthModal />
+
           <Toaster />
           <Sonner />
           <CrispWithNoSSR />
