@@ -28,6 +28,7 @@ import {
   Tab,
   useDiagramCodeStore,
   useDiagramConfigStore,
+  useDiagramNotesStore,
   useIsSavingStore,
   useTabStore,
 } from "@/store/editor-store";
@@ -42,6 +43,9 @@ import { useEffect } from "react";
 import DiagramName from "./diagram-name";
 import { Badge } from "@/components/ui/badge";
 import { IconSpinner } from "@/components/ui/icons";
+import { Icons } from "@/components/shared/icons";
+import DiagramHistory from "./diagram-history";
+import SaveDiagram from "./save-diagram";
 
 const navItems = [
   {
@@ -80,11 +84,13 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
   const { currentTab, setCurrentTab } = useTabStore();
   const { setDiagramCode } = useDiagramCodeStore();
   const { setDiagramConfig } = useDiagramConfigStore();
+  const { setDiagramNotes } = useDiagramNotesStore();
   const { isSaving } = useIsSavingStore();
 
   useEffect(() => {
     setDiagramCode(diagram.code || "");
     setDiagramConfig(diagram.config || "");
+    setDiagramNotes(diagram.diagram_notes || "");
   }, []);
 
   const mounted = useMounted();
@@ -100,7 +106,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
       case "notes":
         return <DiagramNotes diagramId={diagram.id} />;
       case "saved":
-        return <div>Saved</div>;
+        return <DiagramHistory />;
       case "settings":
         return <div>Settings</div>;
       default:
@@ -156,13 +162,14 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
                   </div>
                 ) : (
                   <div className="flex flex-row items-center gap-1 text-muted-foreground">
-                    <CloudDownload className="size-3 " /> saved
+                    <Icons.cloudChecked className="size-3 " /> saved
                   </div>
                 )}
               </Badge>
             </div>
             <div className="ml-auto gap-1.5 text-sm flex items-center">
               <ModeToggle />
+              <SaveDiagram />
               <Button
                 variant="outline"
                 size="sm"

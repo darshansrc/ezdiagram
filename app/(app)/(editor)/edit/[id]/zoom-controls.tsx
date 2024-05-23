@@ -227,6 +227,7 @@ const ZoomControls = ({
                 <DropdownMenuRadioItem value="forest">
                   forest
                 </DropdownMenuRadioItem>
+
                 <DropdownMenuRadioItem value="base">base</DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>

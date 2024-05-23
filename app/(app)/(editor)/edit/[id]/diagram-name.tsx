@@ -46,20 +46,26 @@ const DiagramName: React.FC<DiagramNameProps> = ({
       {isEditing ? (
         <div className="flex flex-row items-center gap-2">
           <Input
-            className="text-sm font-semibold w-fit text-ellipsis shadow-none"
+            className="text-sm font-semibold w-fit  text-ellipsis shadow-none"
             value={diagramName}
             onChange={(e) => handleDiagramNameChange(e.target.value)}
           />
           <Button
             variant="default"
             disabled={isLoading}
-            className="flex flex-row gap-1 items-center"
+            size="sm"
+            className="ml-auto gap-1.5 text-sm flex items-center"
             onClick={handleSaveDiagramName}
           >
             {isLoading && <IconSpinner className="size-4" />}
             Save
           </Button>
-          <Button variant="outline" onClick={handleCancelEdit}>
+          <Button
+            variant="outline"
+            onClick={handleCancelEdit}
+            size="sm"
+            className="ml-auto gap-1.5 text-sm flex items-center"
+          >
             Cancel
           </Button>
         </div>

@@ -16,6 +16,7 @@ export type Database = {
           created_at: string;
           diagram_name: string | null;
           diagram_theme: string | null;
+          diagram_notes: string | null;
           id: string;
           is_public: boolean | null;
           last_updated_at: string | null;
@@ -28,6 +29,7 @@ export type Database = {
           created_at?: string;
           diagram_name?: string | null;
           diagram_theme?: string | null;
+          diagram_notes: string | null;
           id: string;
           is_public?: boolean | null;
           last_updated_at?: string | null;
@@ -40,6 +42,7 @@ export type Database = {
           created_at?: string;
           diagram_name?: string | null;
           diagram_theme?: string | null;
+          diagram_notes: string | null;
           id?: string;
           is_public?: boolean | null;
           last_updated_at?: string | null;

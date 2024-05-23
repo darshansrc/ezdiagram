@@ -61,6 +61,26 @@ export const Icons = {
       ></path>
     </svg>
   ),
+  cloudChecked: ({ ...props }: LucideProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      {...props}
+    >
+      <path d="M 10 17 L 14.5 13" />
+      <path d="M 15.71 8 L 17.5 8" />
+      <path d="M 17.5 8 A1 1 0 0 1 17.5 15.5" />
+      <path d="M 3.642 14.5 A7 7 0 1 1 15.71 8" />
+      <path d="M 8 15 L 10 17" />
+    </svg>
+  ),
   google: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

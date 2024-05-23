@@ -19,7 +19,7 @@ export async function getAllDiagrams(): Promise<Diagram[] | null> {
       .order("last_updated_at", { ascending: false });
 
     if (error) {
-      console.error("Error fetching diagrams:", error); // Log potential errors for debugging
+      console.error("Error fetching diagrams:", error);
       return null;
     }
 
@@ -101,6 +101,24 @@ export async function updateDiagramConfig(id: string, config: string) {
   const { data, error } = await supabase
     .from("diagrams")
     .update({ config: config, last_updated_at: new Date() })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    return error.message;
+  }
+
+  return data;
+}
+
+export async function updateDiagramNotes(id: string, notes: string) {
+  const supabase = createClient();
+
+  await supabase.auth.getUser();
+
+  const { data, error } = await supabase
+    .from("diagrams")
+    .update({ diagram_notes: notes, last_updated_at: new Date() })
     .eq("id", id)
     .select();
 

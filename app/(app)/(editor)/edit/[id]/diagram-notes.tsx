@@ -1,41 +1,50 @@
+import { updateDiagramNotes } from "@/actions/db-actions";
+import { useDiagramNotesStore, useIsSavingStore } from "@/store/editor-store";
 import { Block, BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import { useTheme } from "next-themes";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function DiagramNotes({ diagramId }: { diagramId: string }) {
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | "loading"
   >("loading");
-
   const { theme } = useTheme();
-
+  const previousUpdateRef = useRef<Block[] | null>(null);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { setIsSaving } = useIsSavingStore();
+  const [shouldSave, setShouldSave] = useState<boolean>(false);
+  const { diagramNotes, setDiagramNotes } = useDiagramNotesStore();
   async function saveToStorage(jsonBlocks: Block[]) {
-    // Save contents to local storage. You might want to debounce this or replace
-    // with a call to your API / database.
-    localStorage.setItem(diagramId, JSON.stringify(jsonBlocks));
+    setDiagramNotes(JSON.stringify(jsonBlocks));
+    if (previousUpdateRef.current === jsonBlocks) return;
+
+    previousUpdateRef.current = jsonBlocks;
+
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+    }
+
+    timeoutIdRef.current = setTimeout(async () => {
+      if (shouldSave) {
+        setIsSaving(true);
+        await updateDiagramNotes(diagramId, JSON.stringify(jsonBlocks));
+        setIsSaving(false);
+        setShouldSave(false);
+        timeoutIdRef.current = null;
+      }
+    }, 2000);
   }
 
-  async function loadFromStorage() {
-    // Gets the previously stored editor contents.
-    const storageString = localStorage.getItem(diagramId);
-    return storageString
-      ? (JSON.parse(storageString) as PartialBlock[])
-      : undefined;
-  }
-
-  // Loads the previously stored editor contents.
   useEffect(() => {
-    loadFromStorage().then((content) => {
-      setInitialContent(content);
-    });
+    setInitialContent(
+      diagramNotes ? (JSON.parse(diagramNotes) as PartialBlock[]) : undefined
+    );
+    console.log(diagramNotes);
   }, []);
 
-  // Creates a new editor instance.
-  // We use useMemo + createBlockNoteEditor instead of useCreateBlockNote so we
-  // can delay the creation of the editor until the initial content is loaded.
   const editor = useMemo(() => {
     if (initialContent === "loading") {
       return undefined;
@@ -49,7 +58,7 @@ export default function DiagramNotes({ diagramId }: { diagramId: string }) {
 
   // Renders the editor instance.
   return (
-    <div className="h-[calc(100vh-50px)]  w-full pt-8 overflow-scroll dark:bg-[#1f1f1f]  ">
+    <div className="h-[calc(100vh-50px)] w-full pt-8 overflow-scroll dark:bg-[#1f1f1f]">
       <BlockNoteView
         editor={editor}
         data-theming-css-demo
@@ -59,6 +68,7 @@ export default function DiagramNotes({ diagramId }: { diagramId: string }) {
         }
         onChange={() => {
           saveToStorage(editor.document);
+          setShouldSave(true);
         }}
       />
     </div>

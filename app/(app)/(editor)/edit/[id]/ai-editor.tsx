@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAITabStore } from "@/store/editor-store";
 import {
+  BotMessageSquare,
   CornerDownLeft,
   MessageSquareCode,
   Mic,
@@ -59,7 +60,7 @@ const AIEditor = () => {
           value="chat"
           className="flex flex-row items-center gap-1"
         >
-          <MessageSquareCode className="size-3" />
+          <BotMessageSquare className="size-3" />
           Chat
         </TabsTrigger>
       </TabsList>

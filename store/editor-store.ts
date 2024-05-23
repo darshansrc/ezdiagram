@@ -57,6 +57,16 @@ config:
   setDiagramConfig: (config) => set({ diagramConfig: config }),
 }));
 
+interface DiagramNotesStore {
+  diagramNotes: string;
+  setDiagramNotes: (notes: string) => void;
+}
+
+export const useDiagramNotesStore = create<DiagramNotesStore>((set) => ({
+  diagramNotes: "",
+  setDiagramNotes: (notes) => set({ diagramNotes: notes }),
+}));
+
 interface DiagramThemeStore {
   diagramTheme: string;
   setDiagramTheme: (theme: string) => void;
