@@ -30,7 +30,7 @@
 
 // export default useDiagramStore;
 
-import create from "zustand";
+import { create } from "zustand";
 
 interface svgStore {
   svg: string;

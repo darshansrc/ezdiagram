@@ -1,7 +1,7 @@
 import { Tables } from "@/types/supabase";
 import { BackgroundVariant } from "reactflow";
 
-import create from "zustand";
+import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type Tab = "ai" | "code" | "config" | "notes" | "saved" | "settings";
@@ -29,8 +29,8 @@ interface AITabStore {
   setCurrentAITab: (tab: "new" | "update" | "chat") => void;
 }
 
-export const useAITabStore = create<AITabStore>(
-  persist(
+export const useAITabStore = create(
+  persist<AITabStore>(
     (set) => ({
       currentAITab: "new",
       setCurrentAITab: (tab) => set({ currentAITab: tab }),
