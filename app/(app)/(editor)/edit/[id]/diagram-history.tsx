@@ -1,3 +1,12 @@
+import { fetchDiagramVersions } from "@/actions/db-actions";
+import MermaidPreview from "@/components/dashboard/mermaid-preview";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import {
   Table,
   TableBody,
@@ -8,83 +17,71 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DiagramVersion, useDiagramVersionStore } from "@/store/editor-store";
+import { Eye } from "lucide-react";
+import { useState, useEffect, Suspense } from "react";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+function DiagramHistory({ diagramId }: { diagramId: string }) {
+  const { diagramVersions, setDiagramVersions } = useDiagramVersionStore();
+  const [isFetching, setIsFetching] = useState(false);
 
-function DiagramHistory() {
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsFetching(true);
+      const data = (await fetchDiagramVersions(diagramId)) as DiagramVersion[];
+      setDiagramVersions(data);
+      setIsFetching(false);
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-scroll max-h-[calc(100vh-50px)]">
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Title</TableHead>
-            <TableHead>Language</TableHead>
-            <TableHead>Saved at</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="w-[100px] ">Title</TableHead>
+            <TableHead className="text-center">Language</TableHead>
+
+            <TableHead className="text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">
-                {invoice.totalAmount}
+          {diagramVersions.map((version: DiagramVersion) => (
+            <TableRow key={version.version_id}>
+              <TableCell className="font-medium text-sm  w-full text-wrap text-ellipsis">
+                {version.version_name}
+              </TableCell>
+              <TableCell>
+                <Badge variant="outline">{version.diagram_language}</Badge>
+              </TableCell>
+              <TableCell className="flex flex-row gap-2 items-center">
+                <Badge variant="outline">
+                  <HoverCard openDelay={0} closeDelay={0}>
+                    <HoverCardTrigger asChild className="cursor-pointer">
+                      <Eye className="size-3" />
+                    </HoverCardTrigger>
+                    <HoverCardContent
+                      className=" bg-background p-0 m-0 border-none overflow-hidden"
+                      side={"left"}
+                    >
+                      <Suspense>
+                        <MermaidPreview
+                          chart={version.diagram_code as string}
+                        />
+                      </Suspense>
+                    </HoverCardContent>
+                  </HoverCard>
+                </Badge>
+
+                <Badge variant="default" className="cursor-pointer">
+                  Restore
+                </Badge>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
     </div>
   );

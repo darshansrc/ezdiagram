@@ -1,3 +1,5 @@
+// pnpm supabase gen types typescript --project-id "gfnmfivzfjzcirqpacvr" --schema public > types/supabase.ts
+
 export type Json =
   | string
   | number
@@ -9,45 +11,115 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      chats: {
+        Row: {
+          id: string;
+          payload: Json | null;
+          user_id: string | null;
+        };
+        Insert: {
+          id: string;
+          payload?: Json | null;
+          user_id?: string | null;
+        };
+        Update: {
+          id?: string;
+          payload?: Json | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "chats_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      diagram_versions: {
+        Row: {
+          created_at: string;
+          diagram_code: string | null;
+          diagram_config: string | null;
+          diagram_id: string | null;
+          diagram_language: string | null;
+          diagram_notes: string | null;
+          diagram_theme: string | null;
+          version_id: string;
+          version_name: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          diagram_code?: string | null;
+          diagram_config?: string | null;
+          diagram_id?: string | null;
+          diagram_language?: string | null;
+          diagram_notes?: string | null;
+          diagram_theme?: string | null;
+          version_id?: string;
+          version_name?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          diagram_code?: string | null;
+          diagram_config?: string | null;
+          diagram_id?: string | null;
+          diagram_language?: string | null;
+          diagram_notes?: string | null;
+          diagram_theme?: string | null;
+          version_id?: string;
+          version_name?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "diagram_versions_diagram_id_fkey";
+            columns: ["diagram_id"];
+            isOneToOne: false;
+            referencedRelation: "diagrams";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       diagrams: {
         Row: {
           code: string | null;
           config: string | null;
           created_at: string;
+          diagram_language: string;
           diagram_name: string | null;
-          diagram_theme: string | null;
           diagram_notes: string | null;
+          diagram_theme: string | null;
           id: string;
           is_public: boolean | null;
           last_updated_at: string | null;
           user_id: string;
-          diagram_language: string;
         };
         Insert: {
           code?: string | null;
-          config: string | null;
+          config?: string | null;
           created_at?: string;
+          diagram_language?: string;
           diagram_name?: string | null;
+          diagram_notes?: string | null;
           diagram_theme?: string | null;
-          diagram_notes: string | null;
           id: string;
           is_public?: boolean | null;
           last_updated_at?: string | null;
           user_id: string;
-          diagram_language: string;
         };
         Update: {
           code?: string | null;
-          config: string | null;
+          config?: string | null;
           created_at?: string;
+          diagram_language?: string;
           diagram_name?: string | null;
+          diagram_notes?: string | null;
           diagram_theme?: string | null;
-          diagram_notes: string | null;
           id?: string;
           is_public?: boolean | null;
           last_updated_at?: string | null;
           user_id?: string;
-          diagram_language: string;
         };
         Relationships: [];
       };

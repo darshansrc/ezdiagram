@@ -1,4 +1,6 @@
+import { Tables } from "@/types/supabase";
 import { BackgroundVariant } from "reactflow";
+
 import create from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -114,4 +116,16 @@ interface isSavingStore {
 export const useIsSavingStore = create<isSavingStore>((set) => ({
   isSaving: false,
   setIsSaving: (open: boolean) => set({ isSaving: open }),
+}));
+
+export type DiagramVersion = Tables<"diagram_versions">;
+
+interface diagramVersionStore {
+  diagramVersions: DiagramVersion[];
+  setDiagramVersions: (versions: DiagramVersion[]) => void;
+}
+
+export const useDiagramVersionStore = create<diagramVersionStore>((set) => ({
+  diagramVersions: [],
+  setDiagramVersions: (versions) => set({ diagramVersions: versions }),
 }));

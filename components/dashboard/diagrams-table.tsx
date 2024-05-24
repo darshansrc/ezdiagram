@@ -23,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Tables } from "@/types/database.types";
+import { Tables } from "@/types/supabase";
 import { formatDate } from "@/utils/utils";
 import timesago from "@/utils/timesago";
 import MermaidPreview from "./mermaid-preview";

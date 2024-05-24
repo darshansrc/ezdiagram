@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { Tables } from "@/types/database.types";
+import { Tables } from "@/types/supabase";
 export type Diagram = Tables<"diagrams">;
 
 export async function getAllDiagrams(): Promise<Diagram[] | null> {
@@ -126,5 +126,51 @@ export async function updateDiagramNotes(id: string, notes: string) {
     return error.message;
   }
 
+  return data;
+}
+
+interface DiagramVersionData {
+  version_name?: string;
+  diagram_id: string;
+  diagram_code: string;
+  diagram_config: string;
+  diagram_notes: string;
+  diagram_language?: string;
+  diagram_theme?: string;
+}
+
+export async function saveDiagramVersion(data: DiagramVersionData) {
+  const supabase = createClient();
+  await supabase.auth.getUser();
+  const { data: insertedData, error } = await supabase
+    .from("diagram_versions")
+    .upsert({
+      version_name: data.version_name,
+      diagram_id: data.diagram_id,
+      diagram_code: data.diagram_code,
+      diagram_config: data.diagram_config,
+      diagram_notes: data.diagram_notes,
+      diagram_language: data.diagram_language || "mermaid",
+      diagram_theme: data.diagram_theme || "default",
+    });
+  if (error) {
+    console.error("Error saving diagram version:", error);
+    return error.message;
+  }
+  return insertedData;
+}
+
+export async function fetchDiagramVersions(id: string) {
+  const supabase = createClient();
+  await supabase.auth.getUser();
+  const { data, error } = await supabase
+    .from("diagram_versions")
+    .select("*")
+    .eq("diagram_id", id)
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("Error fetching diagram versions:", error);
+    return error.message;
+  }
   return data;
 }

@@ -58,7 +58,7 @@ export default function DiagramNotes({ diagramId }: { diagramId: string }) {
 
   // Renders the editor instance.
   return (
-    <div className="h-[calc(100vh-50px)] w-full pt-8 overflow-scroll dark:bg-[#1f1f1f]">
+    <div className="h-[calc(100vh-50px)] w-full pt-8 overflow-scroll no-scrollbar dark:bg-[#1f1f1f]">
       <BlockNoteView
         editor={editor}
         data-theming-css-demo

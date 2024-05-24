@@ -11,7 +11,7 @@ const Editor = async ({
 }) => {
   const diagram = (await getDiagram(params.id)) as Diagram;
   return (
-    <div>
+    <div className="editor">
       <EditorDashboard diagram={diagram} />
     </div>
   );

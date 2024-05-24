@@ -29,6 +29,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { IconOpenAI } from "@/components/ui/icons";
 import { Switch } from "@/components/ui/switch";
+import Chat from "./ai-chat";
 
 const AIEditor = () => {
   const { currentAITab, setCurrentAITab } = useAITabStore();
@@ -36,13 +37,13 @@ const AIEditor = () => {
     <Tabs
       defaultValue={currentAITab}
       value={currentAITab}
-      className="min-w-full p-2"
+      className="min-w-full p-2 rounded-full"
     >
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="grid w-full grid-cols-3  rounded-xl">
         <TabsTrigger
           value="new"
           onClick={() => setCurrentAITab("new")}
-          className="flex flex-row items-center gap-1"
+          className="flex flex-row items-center gap-1 rounded-xl"
         >
           <Plus className="size-3" />
           New
@@ -50,7 +51,7 @@ const AIEditor = () => {
         <TabsTrigger
           value="update"
           onClick={() => setCurrentAITab("update")}
-          className="flex flex-row items-center gap-1"
+          className="flex flex-row items-center gap-1 rounded-xl"
         >
           <RefreshCcw className="size-3" />
           Update
@@ -58,7 +59,7 @@ const AIEditor = () => {
         <TabsTrigger
           onClick={() => setCurrentAITab("chat")}
           value="chat"
-          className="flex flex-row items-center gap-1"
+          className="flex flex-row items-center gap-1 rounded-xl"
         >
           <BotMessageSquare className="size-3" />
           Chat
@@ -80,19 +81,19 @@ const AIEditor = () => {
                     <Input id="top-p" placeholder="flowchart" />
                   </div>
                   <div className="grid gap-3">
-                    <Label htmlFor="top-k">Output Size</Label>
+                    <Label htmlFor="top-k">Diagram Size</Label>
                     <Select defaultValue="auto">
                       <SelectTrigger
                         id="model"
                         className="items-start [&_[data-description]]:hidden"
                       >
-                        <SelectValue placeholder="Select a model" />
+                        <SelectValue placeholder="Select  size" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-background">
                         <SelectItem value="auto">auto</SelectItem>
-                        <SelectItem value="low">low</SelectItem>
+                        <SelectItem value="low">small</SelectItem>
                         <SelectItem value="medium">medium</SelectItem>
-                        <SelectItem value="high">high</SelectItem>
+                        <SelectItem value="high">big</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -109,11 +110,11 @@ const AIEditor = () => {
                 <Select>
                   <SelectTrigger
                     id="model"
-                    className="items-start [&_[data-description]]:hidden"
+                    className="items-start [&_[data-description]]:hidden "
                   >
                     <SelectValue placeholder="Select a model" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-background">
                     <SelectItem value="genesis">
                       <div className="flex items-start gap-3 text-muted-foreground">
                         <IconOpenAI className="size-4" />
@@ -165,46 +166,7 @@ const AIEditor = () => {
       </TabsContent>
 
       <TabsContent value="chat" className="relative h-[calc(100vh-110px)]">
-        <form
-          className="absolute bottom-0 w-full overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
-          x-chunk="dashboard-03-chunk-1"
-        >
-          <Label htmlFor="message" className="sr-only">
-            Message
-          </Label>
-          <Textarea
-            id="message"
-            placeholder="Type your message here..."
-            className="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
-          />
-          <div className="flex items-center p-3 pt-0">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Paperclip className="size-4" />
-                    <span className="sr-only">Attach file</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="top">Attach File</TooltipContent>
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Mic className="size-4" />
-                    <span className="sr-only">Use Microphone</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="top">Use Microphone</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <Button type="submit" size="sm" className="ml-auto gap-1.5">
-              Send Message
-              <CornerDownLeft className="size-3.5" />
-            </Button>
-          </div>
-        </form>
+        <Chat />
       </TabsContent>
     </Tabs>
   );

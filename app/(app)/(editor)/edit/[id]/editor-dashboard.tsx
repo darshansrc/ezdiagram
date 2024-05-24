@@ -106,7 +106,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
       case "notes":
         return <DiagramNotes diagramId={diagram.id} />;
       case "saved":
-        return <DiagramHistory />;
+        return <DiagramHistory diagramId={diagram.id} />;
       case "settings":
         return <div>Settings</div>;
       default:
@@ -169,7 +169,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
             </div>
             <div className="ml-auto gap-1.5 text-sm flex items-center">
               <ModeToggle />
-              <SaveDiagram />
+              <SaveDiagram diagramId={diagram.id} />
               <Button
                 variant="outline"
                 size="sm"

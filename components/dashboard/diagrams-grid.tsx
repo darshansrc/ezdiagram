@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Tables } from "@/types/database.types";
+import { Tables } from "@/types/supabase";
 import timesago from "@/utils/timesago";
 import MermaidPreview from "./mermaid-preview";
 import { Suspense, useState } from "react";
