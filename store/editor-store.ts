@@ -30,7 +30,7 @@ interface AITabStore {
 }
 
 export const useAITabStore = create<AITabStore>(
-  persist<AITabStore>(
+  persist(
     (set) => ({
       currentAITab: "new",
       setCurrentAITab: (tab) => set({ currentAITab: tab }),
