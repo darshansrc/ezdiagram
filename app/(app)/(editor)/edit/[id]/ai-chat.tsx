@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { BotMessage, SpinnerMessage, UserMessage } from "./chat-line";
+import { BotMessage, SpinnerMessage, UserMessage } from "./message";
 import { Separator } from "@/components/ui/separator";
 import { useChat } from "ai/react";
 import {
@@ -103,7 +103,7 @@ export default function Chat() {
                 {m.role === "user" ? (
                   <UserMessage>{m.content}</UserMessage>
                 ) : (
-                  <BotMessage text={m.content} />
+                  <BotMessage text={m.content} isLoading={isLoading} />
                 )}
 
                 <div className="my-4" />
@@ -128,7 +128,7 @@ export default function Chat() {
               onChange={handleInputChange}
               rows={1}
               placeholder="Type your message..."
-              className="resize-none text-sm border-0 max-h-60 overflow-y-scroll no-scrollbar focus-within:outline-none p-2 h-12 font-medium w-full px-12 shadow-none focus-visible:ring-0"
+              className="resize-none bg-background text-sm border-0 max-h-60 overflow-y-scroll no-scrollbar focus-within:outline-none p-2 h-12 font-medium w-full px-12 shadow-none focus-visible:ring-0"
             />
             <div className="flex absolute top-[50%] translate-y-[-50%] left-1 p-1 items-center ">
               <Button variant="ghost" size="icon" className=" rounded-full">

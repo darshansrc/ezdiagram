@@ -8,6 +8,7 @@ import {
   useDiagramConfigStore,
   useDiagramThemeStore,
 } from "@/store/editor-store";
+import { nanoid } from "ai";
 
 interface MermaidRendererProps {
   diagramCode: string;
@@ -34,7 +35,8 @@ const MermaidRenderer = memo(({ diagramCode }: MermaidRendererProps) => {
 
       if (container && diagramCode !== "") {
         try {
-          const str = await mermaid.render(`mermaid`, chart);
+          const id = nanoid();
+          const str = await mermaid.render(`mermaid-${id}`, chart);
           container.innerHTML = str.svg;
         } catch (error) {
           container.innerHTML = `<pre>${error}</pre>`;

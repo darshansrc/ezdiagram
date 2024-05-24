@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -68,7 +66,7 @@ export function UserNameForm() {
         <CardFooter>
           <button
             type="submit"
-            className={cn(buttonVariants(), "rounded-full")}
+            className={cn(buttonVariants(), "rounded-full ")}
             disabled={isPending}
           >
             {isPending && <IconSpinner className="mr-2 animate-spin" />}

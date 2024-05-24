@@ -116,7 +116,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
 
   if (mounted)
     return (
-      <div className="grid h-screen w-full pl-[50px]">
+      <div className="grid fixed top-0 left-0  bg-background h-screen w-full pl-[50px]">
         <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r bg-background">
           <div className="border-b p-2 max-h-[50px]">
             <Button variant="outline" size="icon" aria-label="Home">
@@ -157,11 +157,11 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
               />
               <Badge variant="secondary">
                 {isSaving ? (
-                  <div className="flex flex-row items-center gap-1 text-muted-foreground">
+                  <div className="flex flex-row items-center gap-1 text-sm text-muted-foreground">
                     <IconSpinner className="size-3" /> saving
                   </div>
                 ) : (
-                  <div className="flex flex-row items-center gap-1 text-muted-foreground">
+                  <div className="flex flex-row items-center gap-1 text-sm text-muted-foreground">
                     <Icons.cloudChecked className="size-3 " /> saved
                   </div>
                 )}

@@ -29,10 +29,18 @@ interface AITabStore {
   setCurrentAITab: (tab: "new" | "update" | "chat") => void;
 }
 
-export const useAITabStore = create<AITabStore>((set) => ({
-  currentAITab: "new",
-  setCurrentAITab: (tab) => set({ currentAITab: tab }),
-}));
+export const useAITabStore = create<AITabStore>(
+  persist<AITabStore>(
+    (set) => ({
+      currentAITab: "new",
+      setCurrentAITab: (tab) => set({ currentAITab: tab }),
+    }),
+    {
+      name: "ai-tab-store",
+      getStorage: () => localStorage,
+    }
+  )
+);
 
 interface DiagramCodeStore {
   diagramCode: string;
