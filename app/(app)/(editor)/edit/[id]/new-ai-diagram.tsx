@@ -28,6 +28,7 @@ import { MermaidBlock } from "./mermaid-block";
 import { nanoid } from "ai";
 import { useTheme } from "next-themes";
 import { Table } from "@/components/ui/table";
+import { MermaidOutput } from "./mermaid-output";
 
 const NewAiDiagram = () => {
   const [explanation, setExplanation] = React.useState(false);
@@ -141,16 +142,25 @@ const NewAiDiagram = () => {
             </div>
 
             <Button type="submit" size="sm" className="ml-auto gap-1.5">
-              {isLoading && <IconSpinner className="size-3.5" />}
-              {isLoading ? "Generating..." : "Generate"}
-              {!isLoading && <CornerDownLeft className="size-3.5" />}
+              {isLoading && (
+                <>
+                  <IconSpinner className="size-3.5" />
+                  <p>Generating...</p>
+                </>
+              )}
+
+              {!isLoading && (
+                <>
+                  <CornerDownLeft className="size-3.5" />
+                  <p>Generate</p>
+                </>
+              )}
             </Button>
           </div>
         </fieldset>
       </form>
 
-      <fieldset className="flex flex-row min-w-full rounded-md border p-4 mb-32">
-        <legend className=" px-1 text-sm font-medium">Output</legend>
+      <div className="mb-32 w-full">
         {completion ? (
           <MemoizedReactMarkdown
             className="text-sm w-full"
@@ -164,9 +174,8 @@ const NewAiDiagram = () => {
                 const match = /language-(\w+)/.exec(className || "");
 
                 return match && match[1] === "mermaid" ? (
-                  <div className="pb-4">
-                    <MermaidBlock
-                      key={nanoid()}
+                  <div className="">
+                    <MermaidOutput
                       code={String(children).replace(/\n$/, "")}
                       className={className}
                     />
@@ -186,11 +195,16 @@ const NewAiDiagram = () => {
             {completion}
           </MemoizedReactMarkdown>
         ) : (
-          <div className="flex items-center text-sm justify-center w-full h-32 text-muted-foreground">
-            No output yet.
-          </div>
+          <fieldset className="grid gap-6 rounded-md border p-4">
+            <legend className=" px-1 text-[12px] font-medium font-sans ">
+              Output
+            </legend>
+            <div className="flex items-center text-sm justify-center w-full h-32 text-muted-foreground">
+              No output yet.
+            </div>
+          </fieldset>
         )}
-      </fieldset>
+      </div>
     </div>
   );
 };

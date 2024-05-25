@@ -6,6 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import { useState } from "react";
 import { Icons } from "@/components/shared/icons";
 import { toast } from "react-hot-toast";
+import { IconSpinner } from "../ui/icons";
 
 export default function GithubSignInButton(props: { nextUrl?: string }) {
   const supabase = createClient();
@@ -17,15 +18,14 @@ export default function GithubSignInButton(props: { nextUrl?: string }) {
       await supabase.auth.signInWithOAuth({
         provider: "github",
         options: {
-          redirectTo: `${location.origin}/api/auth/callback?next=${
-            props.nextUrl || ""
-          }`,
+          redirectTo: `${location.origin}/api/auth/callback`,
         },
       });
-      setLoading(false);
     } catch (e) {
       console.log(e);
       toast.error("An error occured, please try google");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,7 +37,7 @@ export default function GithubSignInButton(props: { nextUrl?: string }) {
     >
       {loading ? (
         <>
-          {Icons.spinner} <p>Please wait...</p>
+          <IconSpinner /> <p>Continue with GitHub</p>
         </>
       ) : (
         <>

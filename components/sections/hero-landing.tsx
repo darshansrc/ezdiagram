@@ -22,7 +22,7 @@ export async function HeroLanding() {
           )}
           target="_blank"
         >
-          <span className="mr-3">🎉</span> Introducing support for Claude{" "}
+          <span className="mr-3">🎉</span> Introducing support for GPT-4o{" "}
           <ArrowRight className="size-4 pl-1" />
         </Link>
 
@@ -35,8 +35,8 @@ export async function HeroLanding() {
           className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
           style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
         >
-          Create stunning and professional diagrams in seconds with the help of
-          AI.
+          Create, edit and customize professional Mermaid.js and PlantUML
+          diagrams in minutes with EzDiagram.
         </p>
 
         <div

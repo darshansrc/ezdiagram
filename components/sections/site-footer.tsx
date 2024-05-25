@@ -45,10 +45,6 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             © 2024 EzDiagram. All rights reserved.
           </p>
 
-          <p className="text-center text-sm flex justify-center text-muted-foreground w-1/3">
-            Free Plastic 🚮
-          </p>
-
           <div className="flex items-center justify-end gap-3 w-1/3">
             <ModeToggle />
           </div>

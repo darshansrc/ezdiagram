@@ -30,7 +30,7 @@ import { toast } from "react-hot-toast";
 import { nanoid } from "ai";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-export const MermaidBlock = ({ code, children = [], className, ...props }) => {
+export const MermaidOutput = ({ code, children = [], className, ...props }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
 
   const demoid = useRef(`dome${nanoid()}`);
@@ -80,22 +80,31 @@ export const MermaidBlock = ({ code, children = [], className, ...props }) => {
 
   return (
     <>
-      <div className="flex relative flex-col bg-muted   border py-6 pt-12 min-w-full   dark:bg-neutral-900 rounded-md p-2">
-        <Fragment>
-          <code id={demoid.current} className="text-[0px] " />
-          <code ref={refElement} data-name="mermaid" className="text-[0px] " />
-        </Fragment>
-        <div className="absolute top-1 right-1 ">
+      <fieldset className="relative flex flex-row min-w-full rounded-md border p-2 mb-2">
+        <legend className=" px-1 text-[12px] font-medium font-sans ">
+          Output
+        </legend>
+        <div className="   min-w-full   dark:bg-neutral-900 rounded-md ">
+          <Fragment>
+            <code id={demoid.current} className="text-[0px] " />
+            <code
+              ref={refElement}
+              data-name="mermaid"
+              className="text-[0px] "
+            />
+          </Fragment>
+        </div>
+        <div className="absolute -top-7 bg-background right-2 ">
           <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger>
                 <Button
-                  variant={"ghost"}
+                  variant={"link"}
                   className="focus-within:outline-none focus:outline-none flex flex-row gap-1  items-center "
                   onClick={handleReplace}
                 >
                   <BetweenHorizontalStart className="size-3 text-muted-foreground" />{" "}
-                  <p className="text-[10px]">Replace</p>
+                  <p className="text-[10px] font-sans">Replace</p>
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Replace</TooltipContent>
@@ -103,7 +112,7 @@ export const MermaidBlock = ({ code, children = [], className, ...props }) => {
             <Tooltip>
               <TooltipTrigger>
                 <Button
-                  variant={"ghost"}
+                  variant={"link"}
                   size="icon"
                   className="focus-within:outline-none focus:outline-none"
                   onClick={onCopy}
@@ -122,7 +131,7 @@ export const MermaidBlock = ({ code, children = [], className, ...props }) => {
                 <Dialog>
                   <DialogTrigger className=" focus-within:outline-none focus:outline-none">
                     <Button
-                      variant={"ghost"}
+                      variant={"link"}
                       size="icon"
                       className="focus-within:outline-none focus:outline-none"
                     >
@@ -138,7 +147,7 @@ export const MermaidBlock = ({ code, children = [], className, ...props }) => {
             </Tooltip>
           </TooltipProvider>
         </div>
-      </div>
+      </fieldset>
     </>
   );
 };
