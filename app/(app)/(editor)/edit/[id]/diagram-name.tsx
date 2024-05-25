@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { IconSpinner } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 interface DiagramNameProps {
   initialDiagramName: string;

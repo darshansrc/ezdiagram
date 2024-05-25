@@ -10,7 +10,7 @@ import {
   Mic,
   Paperclip,
 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { Message } from "ai";
 import Textarea from "react-textarea-autosize";
 
@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/tooltip";
 
 import { Input } from "@/components/ui/input";
+import useSvgStore from "@/store/svg-store";
 
 const initialMessages: Message[] = [
   {
@@ -39,6 +40,7 @@ export default function Chat() {
   const [prompt, setPrompt] = useState<string>("");
   const [initialChats, setInitialChats] = useState<Message[]>([]);
   const [hasResponseStarted, setHasResponseStarted] = useState(false);
+  const { setSvg } = useSvgStore();
 
   //   useEffect(() => {
   //     const fetchData = async () => {
@@ -52,9 +54,12 @@ export default function Chat() {
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       initialMessages: initialMessages,
-      onResponse: () => setHasResponseStarted(true),
+      onResponse: () => {
+        setHasResponseStarted(true);
+      },
       onFinish: () => {
         setHasResponseStarted(false);
+        setSvg("");
         // fetchChat(diagramId);
       },
       onError: (error) =>
@@ -147,7 +152,7 @@ export default function Chat() {
             </div>
           </form>
           <p className="text-muted-foreground text-[10px] py-2 font-medium w-full text-center">
-            ChatGPT can make mistakes. Check important info.
+            AI can make mistakes. Check important info.
           </p>
         </div>
       </div>

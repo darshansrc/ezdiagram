@@ -6,11 +6,12 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { BotIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { FC, memo } from "react";
+import { FC, memo, Suspense } from "react";
 import { Icons } from "@/components/shared/icons";
 import { MermaidBlock } from "./mermaid-block";
 import ReactMarkdown, { Options } from "react-markdown";
 import MarkdownPreview from "@uiw/react-markdown-preview";
+import { nanoid } from "ai";
 
 export const MemoizedReactMarkdown: FC<Options> = memo(
   ReactMarkdown,
@@ -47,18 +48,22 @@ export function BotMessage({
       </div>
       <div className="ml-2 flex-1 space-y-2 overflow-hidden  flex  max-w-[88%] flex-col gap-2 rounded-lg px-1 py-1 text-sm ">
         <MemoizedReactMarkdown
-          className=""
+          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
             p({ children }) {
-              return <p className="mb-2 last:mb-0">{children}</p>;
+              return (
+                <p className="mb-2 text-sm text-black dark:text-white last:mb-0">
+                  {children}
+                </p>
+              );
             },
             code({ node, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
 
               return match && match[1] === "mermaid" ? (
                 <MermaidBlock
-                  key={Math.random()}
+                  key={nanoid()}
                   code={String(children).replace(/\n$/, "")}
                   className={className}
                 />

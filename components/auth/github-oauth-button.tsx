@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { FaGithub } from "react-icons/fa";
 import { useState } from "react";
 import { Icons } from "@/components/shared/icons";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 export default function GithubSignInButton(props: { nextUrl?: string }) {
   const supabase = createClient();

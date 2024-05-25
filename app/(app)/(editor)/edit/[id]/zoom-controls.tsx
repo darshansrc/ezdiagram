@@ -74,9 +74,7 @@ const ZoomControls = ({
               />
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-            Zoom In
-          </TooltipContent>
+          <TooltipContent>Zoom In</TooltipContent>
         </Tooltip>
 
         <Tooltip>
@@ -88,9 +86,7 @@ const ZoomControls = ({
               />
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-            Zoom Out
-          </TooltipContent>
+          <TooltipContent>Zoom Out</TooltipContent>
         </Tooltip>
 
         <Tooltip>
@@ -102,9 +98,7 @@ const ZoomControls = ({
               />
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-            Reset Zoom
-          </TooltipContent>
+          <TooltipContent>Reset Zoom</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     );
@@ -126,9 +120,7 @@ const ZoomControls = ({
                   />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-                Zoom In
-              </TooltipContent>
+              <TooltipContent>Zoom In</TooltipContent>
             </Tooltip>
 
             <Tooltip>
@@ -140,9 +132,7 @@ const ZoomControls = ({
                   />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent className="dark:bg-white p-1 px-2 text-[12px]">
-                Zoom Out
-              </TooltipContent>
+              <TooltipContent>Zoom Out</TooltipContent>
             </Tooltip>
 
             <Tooltip>
@@ -154,9 +144,7 @@ const ZoomControls = ({
                   />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent className="dark:bg-white p-1 px-2 text-[12px]">
-                Reset Zoom
-              </TooltipContent>
+              <TooltipContent>Reset Zoom</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         )}
@@ -175,9 +163,7 @@ const ZoomControls = ({
               )}
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="dark:bg-white p-1 px-2 text-[12px]">
-            Pan and Zoom
-          </TooltipContent>
+          <TooltipContent>Pan and Zoom</TooltipContent>
         </Tooltip>
 
         <Tooltip>
@@ -192,9 +178,7 @@ const ZoomControls = ({
               <Maximize2 className="h-4 w-4 text-neutral-800  dark:text-white" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="dark:bg-white p-1 px-2 text-[12px]">
-            Full Screen
-          </TooltipContent>
+          <TooltipContent>Full Screen</TooltipContent>
         </Tooltip>
         <Tooltip>
           <DropdownMenu>
@@ -233,9 +217,7 @@ const ZoomControls = ({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <TooltipContent className="dark:bg-neutral-800 dark:text-white p-1 px-2 text-[12px]">
-            Diagram Theme
-          </TooltipContent>
+          <TooltipContent>Diagram Theme</TooltipContent>
         </Tooltip>
 
         <Tooltip>
@@ -276,9 +258,7 @@ const ZoomControls = ({
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-          <TooltipContent className="dark:bg-neutral-800 p-1 px-2 text-[12px]">
-            Background Variant
-          </TooltipContent>
+          <TooltipContent>Background Variant</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>

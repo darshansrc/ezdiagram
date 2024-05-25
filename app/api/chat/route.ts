@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   const result = await streamText({
     model: openai("gpt-3.5-turbo"),
-    system: "you are an expert in writing mermaid.js diagrams",
+    // system: "you are an expert in writing mermaid.js diagrams",
     messages,
   });
 

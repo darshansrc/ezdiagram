@@ -21,7 +21,7 @@ import {
 } from "@/store/editor-store";
 import { saveDiagramVersion } from "@/actions/db-actions";
 import { IconSpinner } from "@/components/ui/icons";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 const SaveDiagram = ({ diagramId }: { diagramId: string }) => {
   const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);

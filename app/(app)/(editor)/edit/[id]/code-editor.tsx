@@ -5,7 +5,7 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import { githubDarkInit, githubLightInit } from "@uiw/codemirror-theme-github";
 import { useTheme } from "next-themes";
 import { updateDiagramCode } from "@/actions/db-actions";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 const CodeEditor = ({ diagramId }: { diagramId: string }) => {
   const { diagramCode, setDiagramCode } = useDiagramCodeStore();
@@ -45,7 +45,7 @@ const CodeEditor = ({ diagramId }: { diagramId: string }) => {
         value={diagramCode}
         minHeight="100%"
         minWidth="100%"
-        className="w-full h-[calc(100vh-50px)] border-none active:outline-none text-[12px] "
+        className="w-full h-[calc(100vh-50px)] border-none no-scrollbar active:outline-none text-[12px] "
         lang="mermaid"
         extensions={[langs.mermaid()]}
         onChange={(value) => {

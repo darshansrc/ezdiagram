@@ -1,6 +1,6 @@
 import { getAllDiagrams } from "@/actions/db-actions";
 import { Tables } from "@/types/supabase";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { StateCreator } from "zustand/vanilla";

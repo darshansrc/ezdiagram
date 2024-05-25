@@ -5,6 +5,7 @@ import {
   ReactFlow,
   Background,
   BackgroundVariant,
+  Controls,
 } from "reactflow";
 
 const MermaidFullScreen = ({ code }: { code: string }) => {
@@ -40,7 +41,8 @@ const MermaidFullScreen = ({ code }: { code: string }) => {
         selectionOnDrag={false}
         nodesDraggable={false}
       >
-        <Background />
+        <Background variant={BackgroundVariant.Dots} />
+        <Controls showInteractive={false} />
       </ReactFlow>
     </div>
   );

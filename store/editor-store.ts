@@ -2,7 +2,7 @@ import { Tables } from "@/types/supabase";
 import { BackgroundVariant } from "reactflow";
 
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export type Tab = "ai" | "code" | "config" | "notes" | "saved" | "settings";
 
@@ -19,7 +19,7 @@ export const useTabStore = create(
     }),
     {
       name: "tab-store", // unique name for the store
-      getStorage: () => localStorage, // storage to use for persisting the store
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
@@ -37,7 +37,7 @@ export const useAITabStore = create(
     }),
     {
       name: "ai-tab-store",
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
@@ -111,7 +111,7 @@ export const useReactFlowBackground = create(
     }),
     {
       name: "react-flow-background", // unique name for the store
-      getStorage: () => localStorage, // storage to use for persisting the store
+      storage: createJSONStorage(() => localStorage), // storage to use for persisting the store
     }
   )
 );

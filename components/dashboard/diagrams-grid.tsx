@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/pagination";
 import { useRouter } from "next/navigation";
 import { DeleteDiagram } from "./delete-diagram";
-import { toast } from "sonner";
 import { RenameDiagram } from "./rename-diagram";
 
 export type Diagram = Tables<"diagrams">;

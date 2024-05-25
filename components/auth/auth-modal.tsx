@@ -17,7 +17,7 @@ import useAuthModal from "@/store/auth-modal-store";
 import GoogleSignInButton from "./google-oauth-button";
 import GithubSignInButton from "./github-oauth-button";
 import { sendMagicLink } from "@/actions/auth-actions";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import Link from "next/link";
 import useUserStore from "@/store/user-store";
 

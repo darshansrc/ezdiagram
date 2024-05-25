@@ -1,13 +1,12 @@
 import "@/styles/globals.css";
 
 import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { AuthModal } from "@/components/auth/auth-modal";
 import dynamic from "next/dynamic";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -82,9 +81,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           {children}
           <AuthModal />
-
-          <Toaster />
-          <Sonner />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              className:
+                "dark:bg-neutral-900 dark:text-white text-sm shadow-none border animate-none",
+              duration: 2000,
+            }}
+          />
           <CrispWithNoSSR />
         </ThemeProvider>
       </body>
