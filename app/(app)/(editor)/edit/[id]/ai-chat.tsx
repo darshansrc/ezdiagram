@@ -53,6 +53,7 @@ export default function Chat() {
 
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
+      api: "/api/prompt",
       initialMessages: initialMessages,
       onResponse: () => {
         setHasResponseStarted(true);

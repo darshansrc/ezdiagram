@@ -35,7 +35,7 @@ const NewAiDiagram = () => {
   const [selectedModel, setSelectedModel] = React.useState("gpt-3.5-turbo");
   const { completion, input, handleInputChange, isLoading, handleSubmit } =
     useCompletion({
-      api: "/api/completion",
+      api: "/api/prompt",
       body: { explanation: explanation, model: selectedModel },
     });
   const { theme } = useTheme();
