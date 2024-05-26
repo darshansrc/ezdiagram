@@ -53,7 +53,7 @@ export const MermaidBlock = ({ code, isLoading }) => {
         const str = await mermaid.render(demoid.current, code);
         container.innerHTML = str.svg;
         setSvgStore(str.svg);
-        // setDiagramCode(code);
+        setDiagramCode(code);
       } catch (error) {
         container.innerHTML = `${svgStore}`;
         console.error(error);

@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Textarea from "react-textarea-autosize";
@@ -20,23 +14,35 @@ import { Input } from "@/components/ui/input";
 import { IconOpenAI, IconSpinner } from "@/components/ui/icons";
 import { Switch } from "@/components/ui/switch";
 import { CornerDownLeft } from "lucide-react";
-import { useCompletion } from "ai/react";
+import { useChat } from "ai/react";
 import { MemoizedReactMarkdown } from "./markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import { MermaidBlock } from "./mermaid-block";
-import { nanoid } from "ai";
 import { useTheme } from "next-themes";
-import { Table } from "@/components/ui/table";
 import { MermaidOutput } from "./mermaid-output";
+import { MermaidBlock } from "./mermaid-block";
+import { Icons } from "@/components/shared/icons";
+
+const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following prompt : 
+
+
+**Helpful Answer (Markdown):**
+
+\`\`\`mermaid
+// Include your Mermaid.js code block 
+\`\`\`
+
+
+**Please do not give any expalanation only give diagram code
+`;
 
 const NewAiDiagram = () => {
   const [explanation, setExplanation] = React.useState(false);
   const [selectedModel, setSelectedModel] = React.useState("gpt-3.5-turbo");
-  const { completion, input, handleInputChange, isLoading, handleSubmit } =
-    useCompletion({
-      api: "/api/prompt",
-      body: { explanation: explanation, model: selectedModel },
+  const { messages, input, handleInputChange, isLoading, handleSubmit } =
+    useChat({
+      api: "/api/claude",
+      body: { system: SYSTEM_PROMPT, explanation, model: selectedModel },
     });
   const { theme } = useTheme();
 
@@ -92,29 +98,46 @@ const NewAiDiagram = () => {
             <Select value={selectedModel} onValueChange={setSelectedModel}>
               <SelectTrigger
                 id="model"
-                className="items-start [&_[data-description]]:hidden "
+                className="items-center [&_[data-description]]:hidden "
               >
                 <SelectValue placeholder="Select a model" />
               </SelectTrigger>
               <SelectContent className="bg-background">
-                <SelectItem value="gpt-3.5-turbo">
-                  <div className="flex items-start gap-3 text-muted-foreground">
-                    <IconOpenAI className="size-4" />
+                <SelectItem value="anthropic.claude-3-haiku-20240307-v1:0">
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <Icons.anthropic className="size-4" />
                     <div className="grid gap-0.5">
                       <p>
-                        GPT-3.5{" "}
+                        Claude 3{" "}
                         <span className="font-medium text-foreground">
-                          Turbo
+                          Haiku
                         </span>
                       </p>
                       <p className="text-xs" data-description>
-                        Our fastest model for general use cases.
+                        Light & fast
                       </p>
                     </div>
                   </div>
                 </SelectItem>
+                <SelectItem value="anthropic.claude-3-sonnet-20240229-v1:0">
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <Icons.anthropic className="size-4" />
+                    <div className="grid gap-0.5">
+                      <p>
+                        Claude 3{" "}
+                        <span className="font-medium text-foreground">
+                          Sonnet
+                        </span>
+                      </p>
+                      <p className="text-xs" data-description>
+                        Hard-working
+                      </p>
+                    </div>
+                  </div>
+                </SelectItem>
+
                 <SelectItem value="gpt-4o">
-                  <div className="flex items-start gap-3 text-muted-foreground">
+                  <div className="flex items-center gap-3 text-muted-foreground">
                     <IconOpenAI className="size-4" />
                     <div className="grid gap-0.5">
                       <p>
@@ -122,7 +145,7 @@ const NewAiDiagram = () => {
                         <span className="font-medium text-foreground"></span>
                       </p>
                       <p className="text-xs" data-description>
-                        Performance and speed for efficiency.
+                        Powerful
                       </p>
                     </div>
                   </div>
@@ -161,28 +184,40 @@ const NewAiDiagram = () => {
       </form>
 
       <div className="mb-32 w-full">
-        {completion ? (
+        {messages && messages[1] ? (
           <MemoizedReactMarkdown
-            className="text-sm w-full"
+            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm text-black dark:text-white"
             remarkPlugins={[remarkGfm, remarkMath]}
             components={{
-              p({ children }) {
-                return <p className="mb-2 text-sm last:mb-0">{children}</p>;
-              },
+              code({
+                children,
+                inline,
+                className,
+                ...props
+              }: {
+                children: React.ReactNode;
+                inline?: boolean;
+                className?: string;
+                props?: any;
+              }) {
+                if (inline) {
+                  return (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  );
+                }
 
-              code({ node, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || "");
-
                 return match && match[1] === "mermaid" ? (
-                  <div className="">
-                    <MermaidOutput
-                      code={String(children).replace(/\n$/, "")}
-                      className={className}
-                    />
-                  </div>
+                  <MermaidBlock
+                    isLoading={isLoading}
+                    code={String(children).replace(/\n$/, "")}
+                  />
                 ) : (
-                  <div data-color-mode={theme} className="my-1">
+                  <div data-color-mode={theme}>
                     <MarkdownPreview
+                      className=" text-black dark:text-white font-inter"
                       source={`\`\`\`${match && match[1]}\n${String(
                         children
                       ).replace(/\n$/, "")}\n\`\`\``}
@@ -192,7 +227,7 @@ const NewAiDiagram = () => {
               },
             }}
           >
-            {completion}
+            {messages[1].content}
           </MemoizedReactMarkdown>
         ) : (
           <fieldset className="grid gap-6 rounded-md border p-4">

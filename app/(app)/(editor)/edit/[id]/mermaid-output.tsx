@@ -79,9 +79,9 @@ export const MermaidOutput = ({ code, children = [], className, ...props }) => {
   };
 
   return (
-    <>
-      <fieldset className="relative flex flex-row min-w-full rounded-md border p-2 mb-2">
-        <legend className=" px-1 text-[12px] font-medium font-sans ">
+    <div className=" bg-background ">
+      <fieldset className="relative flex flex-row min-w-full bg-background  rounded-md border p-2 ">
+        <legend className=" px-1 text-[12px] text-foreground font-medium font-sans ">
           Output
         </legend>
         <div className="   min-w-full   dark:bg-neutral-900 rounded-md ">
@@ -148,6 +148,6 @@ export const MermaidOutput = ({ code, children = [], className, ...props }) => {
           </TooltipProvider>
         </div>
       </fieldset>
-    </>
+    </div>
   );
 };

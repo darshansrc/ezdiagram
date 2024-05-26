@@ -9,12 +9,13 @@ const client = new AnthropicBedrock({
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, system, model } = await req.json();
     const message = await client.messages.create({
-      model: "anthropic.claude-3-haiku-20240307-v1:0",
+      model: model,
       max_tokens: 1024,
-      system:
-        "You are an expert in mermaid.js and tasked with translating user requirements into technical specifications for creating mermaid.js diagrams to code. You can chat with user if user doesn't ask for a diagram",
+      system: system
+        ? system
+        : "You are an expert in mermaid.js and tasked with translating user requirements into technical specifications for creating mermaid.js diagrams to code. You can chat with user if user doesn't ask for a diagram",
       messages,
       stream: true,
     });
