@@ -24,9 +24,7 @@ export async function sendMagicLink(email: string) {
   const { data, error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      // set this to false if you do not want the user to be automatically signed up
-      shouldCreateUser: true,
-      emailRedirectTo: "https://ezdiagram.com/api/auth/callback",
+      emailRedirectTo: "https://www.ezdiagram.com/api/auth/callback/",
     },
   });
 
