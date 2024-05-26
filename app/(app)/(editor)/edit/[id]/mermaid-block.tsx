@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import mermaid from "mermaid";
 import useSvgStore from "@/store/svg-store";
-import { useChat } from "ai/react";
 import { useTheme } from "next-themes";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {

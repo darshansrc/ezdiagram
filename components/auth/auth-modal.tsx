@@ -20,6 +20,8 @@ import { sendMagicLink } from "@/actions/auth-actions";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import useUserStore from "@/store/user-store";
+import { IconSpinner } from "../ui/icons";
+import { Check, Send } from "lucide-react";
 
 export function AuthModal() {
   const { isAuthModalOpen, setIsAuthModalOpen } = useAuthModal();
@@ -51,42 +53,8 @@ export function AuthModal() {
     setIsAuthModalOpen(false);
     setEmail("");
     setShowEmailForm(false);
-    toast("Magic link sent to your email");
+    toast.success("Magic link sent to your email");
   };
-
-  function LoginForm() {
-    return (
-      <div className={cn("grid items-start gap-4")}>
-        <DialogHeader>
-          <DialogTitle className={"text-left pl-2"}>
-            Continue with an email link 💌
-          </DialogTitle>
-          <DialogDescription className="pt-2 pb-6 text-left pl-2">
-            Enter your email and we&apos;ll send you a link to create a new
-            profile.
-          </DialogDescription>
-        </DialogHeader>
-        <Input
-          type="email"
-          placeholder="Enter Email Address..."
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <div className="flex flex-row gap-2 items-center justify-end">
-          <Button variant="link" onClick={handleBackToOAuth}>
-            Back
-          </Button>
-          <Button variant="default" onClick={handleSendMagicLink}>
-            {isSendingEmail
-              ? "Sending..."
-              : isEmailSent
-              ? "  Magic Email Sent"
-              : "Send Magic Link"}
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   const OAuthButtons = ({ className }: React.ComponentProps<"div">) => {
     return (
@@ -142,6 +110,7 @@ export function AuthModal() {
               </DialogHeader>
               <Input
                 type="email"
+                name="email"
                 placeholder="Enter Email Address..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -151,11 +120,16 @@ export function AuthModal() {
                   Back
                 </Button>
                 <Button variant="default" onClick={handleSendMagicLink}>
-                  {isSendingEmail
-                    ? "Sending..."
-                    : isEmailSent
-                    ? "  Magic Email Sent"
-                    : "Send Magic Link"}
+                  {isSendingEmail ? (
+                    <div className="flex flex-row items-center gap-2">
+                      <IconSpinner className="size-4" />
+                      Sending...
+                    </div>
+                  ) : (
+                    <div className="flex flex-row items-center gap-2">
+                      <Send className="size-4" /> Send Link
+                    </div>
+                  )}
                 </Button>
               </div>
             </div>

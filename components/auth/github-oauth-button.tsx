@@ -2,7 +2,6 @@
 
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "../ui/button";
-import { FaGithub } from "react-icons/fa";
 import { useState } from "react";
 import { Icons } from "@/components/shared/icons";
 import { toast } from "react-hot-toast";
@@ -41,7 +40,7 @@ export default function GithubSignInButton(props: { nextUrl?: string }) {
         </>
       ) : (
         <>
-          <FaGithub />
+          <Icons.gitHub className="size-4" />
           <p>Continue with GitHub</p>
         </>
       )}

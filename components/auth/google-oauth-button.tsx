@@ -2,7 +2,6 @@
 
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "../ui/button";
-import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { Icons } from "@/components/shared/icons";
 
@@ -33,7 +32,7 @@ export default function GoogleSignInButton(props: { nextUrl?: string }) {
         </>
       ) : (
         <>
-          <FcGoogle />
+          <Icons.google className="size-4" />
           <p>Continue with Google</p>
         </>
       )}
