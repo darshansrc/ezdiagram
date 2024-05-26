@@ -166,9 +166,8 @@ const UpdateAiDiagram = () => {
                 return match && match[1] === "mermaid" ? (
                   <div className="pb-4">
                     <MermaidBlock
-                      key={nanoid()}
+                      isLoading={false}
                       code={String(children).replace(/\n$/, "")}
-                      className={className}
                     />
                   </div>
                 ) : (
