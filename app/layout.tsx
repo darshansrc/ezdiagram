@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-
+import { Analytics } from "@vercel/analytics/react";
 import { fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { Toaster } from "react-hot-toast";
 import { siteConfig } from "@/config/site";
@@ -78,6 +78,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           {children}
           <AuthModal />
+          <Analytics />
           <Toaster
             position="top-right"
             toastOptions={{
