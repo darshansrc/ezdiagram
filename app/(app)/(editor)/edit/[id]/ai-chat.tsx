@@ -1,40 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { BotMessage, SpinnerMessage, UserMessage } from "./message";
-import { Separator } from "@/components/ui/separator";
 import { useChat } from "ai/react";
-import {
-  ArrowUp,
-  CircleArrowRight,
-  CornerDownLeft,
-  Mic,
-  Paperclip,
-} from "lucide-react";
+import { ArrowUp, Paperclip } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { Message } from "ai";
 import Textarea from "react-textarea-autosize";
-
 import { Button } from "@/components/ui/button";
-
 import { useTheme } from "next-themes";
-import { Label } from "@/components/ui/label";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-import { Input } from "@/components/ui/input";
 import useSvgStore from "@/store/svg-store";
-
-const initialMessages: Message[] = [
-  {
-    role: "assistant",
-    id: "0",
-    content: "Hello! How can I assist you with your diagram today?  ",
-  },
-];
 
 export default function Chat() {
   const [initialChats, setInitialChats] = useState<Message[]>([]);
@@ -44,7 +18,7 @@ export default function Chat() {
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       api: "/api/claude",
-      initialMessages: initialMessages,
+
       onResponse: () => {
         setHasResponseStarted(true);
       },
@@ -80,7 +54,6 @@ export default function Chat() {
       handleSubmit(e);
     }
   };
-  const { theme } = useTheme();
 
   return (
     <>

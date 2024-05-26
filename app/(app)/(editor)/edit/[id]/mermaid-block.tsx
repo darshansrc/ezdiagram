@@ -29,7 +29,7 @@ import { toast } from "react-hot-toast";
 import { nanoid } from "ai";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-export const MermaidBlock = ({ code, children = [], ...props }) => {
+export const MermaidBlock = ({ code, isLoading }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
 
   const demoid = useRef(`dome${nanoid()}`);

@@ -48,25 +48,38 @@ export function BotMessage({
       </div>
       <div className="ml-2 flex-1 space-y-2 overflow-hidden  flex  max-w-[88%] flex-col gap-2 rounded-lg px-1 py-1 text-sm ">
         <MemoizedReactMarkdown
-          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm text-black dark:text-white"
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
-            p(props) {
-              const { children, className, node, ...rest } = props;
-              return (
-                <p className="mb-2 text-sm text-black dark:text-white last:mb-0">
-                  {children}
-                </p>
-              );
-            },
-            code(props) {
-              const { children, className, node, ...rest } = props;
+            code({
+              children,
+              inline,
+              className,
+              ...props
+            }: {
+              children: React.ReactNode;
+              inline?: boolean;
+              className?: string;
+              props?: any;
+            }) {
+              if (inline) {
+                return (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              }
+
               const match = /language-(\w+)/.exec(className || "");
               return match && match[1] === "mermaid" ? (
-                <MermaidBlock code={String(children).replace(/\n$/, "")} />
+                <MermaidBlock
+                  isLoading={isLoading}
+                  code={String(children).replace(/\n$/, "")}
+                />
               ) : (
                 <div data-color-mode={theme}>
                   <MarkdownPreview
+                    className=" text-black dark:text-white font-inter"
                     source={`\`\`\`${match && match[1]}\n${String(
                       children
                     ).replace(/\n$/, "")}\n\`\`\``}
