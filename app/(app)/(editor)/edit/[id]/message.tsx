@@ -51,32 +51,27 @@ export function BotMessage({
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
-            p({ children }) {
+            p(props) {
+              const { children, className, node, ...rest } = props;
               return (
                 <p className="mb-2 text-sm text-black dark:text-white last:mb-0">
                   {children}
                 </p>
               );
             },
-            code({ node, className, children, ...props }) {
+            code(props) {
+              const { children, className, node, ...rest } = props;
               const match = /language-(\w+)/.exec(className || "");
-
               return match && match[1] === "mermaid" ? (
-                <MermaidBlock
-                  key={nanoid()}
-                  code={String(children).replace(/\n$/, "")}
-                  className={className}
-                />
+                <MermaidBlock code={String(children).replace(/\n$/, "")} />
               ) : (
-                <>
-                  <div data-color-mode={theme}>
-                    <MarkdownPreview
-                      source={`\`\`\`${match && match[1]}\n${String(
-                        children
-                      ).replace(/\n$/, "")}\n\`\`\``}
-                    />
-                  </div>
-                </>
+                <div data-color-mode={theme}>
+                  <MarkdownPreview
+                    source={`\`\`\`${match && match[1]}\n${String(
+                      children
+                    ).replace(/\n$/, "")}\n\`\`\``}
+                  />
+                </div>
               );
             },
           }}

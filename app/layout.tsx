@@ -6,7 +6,6 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { AuthModal } from "@/components/auth/auth-modal";
-import dynamic from "next/dynamic";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -60,8 +59,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  const CrispWithNoSSR = dynamic(() => import("../scripts/crisp.js"));
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -89,7 +86,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
               duration: 2000,
             }}
           />
-          <CrispWithNoSSR />
         </ThemeProvider>
       </body>
     </html>

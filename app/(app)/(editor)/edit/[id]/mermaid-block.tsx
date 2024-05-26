@@ -29,7 +29,7 @@ import { toast } from "react-hot-toast";
 import { nanoid } from "ai";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-export const MermaidBlock = ({ code, children = [], className, ...props }) => {
+export const MermaidBlock = ({ code, children = [], ...props }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
 
   const demoid = useRef(`dome${nanoid()}`);
@@ -78,66 +78,66 @@ export const MermaidBlock = ({ code, children = [], className, ...props }) => {
   };
 
   return (
-    <>
-      <div className="flex relative flex-col bg-muted   border py-6 pt-12 min-w-full   dark:bg-neutral-900 rounded-md p-2">
-        <Fragment>
-          <code id={demoid.current} className="text-[0px] " />
-          <code ref={refElement} data-name="mermaid" className="text-[0px] " />
-        </Fragment>
-        <div className="absolute top-1 right-1 ">
-          <TooltipProvider delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant={"ghost"}
-                  className="focus-within:outline-none focus:outline-none flex flex-row gap-1  items-center "
-                  onClick={handleReplace}
-                >
-                  <BetweenHorizontalStart className="size-3 text-muted-foreground" />{" "}
-                  <p className="text-[10px]">Replace</p>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Replace</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant={"ghost"}
-                  size="icon"
-                  className="focus-within:outline-none focus:outline-none"
-                  onClick={onCopy}
-                >
-                  {isCopied ? (
-                    <Check className="size-3 text-muted-foreground" />
-                  ) : (
-                    <Copy className="size-3 text-muted-foreground" />
-                  )}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Copy Code</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger>
-                <Dialog>
-                  <DialogTrigger className=" focus-within:outline-none focus:outline-none">
-                    <Button
-                      variant={"ghost"}
-                      size="icon"
-                      className="focus-within:outline-none focus:outline-none"
-                    >
-                      <Maximize2 className="size-3 text-muted-foreground" />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="w-[90vw] p-0 flex min-w-[90vw] max-w-[90vw] h-[90vh] max-h-[90vh] overflow-scroll ">
-                    <MermaidFullScreen code={code} />
-                  </DialogContent>
-                </Dialog>
-              </TooltipTrigger>
-              <TooltipContent>Full Screen</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
+    <div className="flex relative bg-background flex-col border py-6 pt-12 min-w-full  rounded-md p-2">
+      <Fragment>
+        <code id={demoid.current} className="text-[0px] " />
+        <code ref={refElement} data-name="mermaid" className="text-[0px] " />
+      </Fragment>
+      <div className="absolute top-1 right-1 ">
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                variant={"ghost"}
+                className="focus-within:outline-none focus:outline-none flex flex-row gap-1  items-center "
+                onClick={handleReplace}
+              >
+                <BetweenHorizontalStart className="size-3 text-muted-foreground" />{" "}
+                <p className="text-[10px] text-neutral-900 dark:text-white">
+                  Replace
+                </p>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Replace</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                variant={"ghost"}
+                size="icon"
+                className="focus-within:outline-none focus:outline-none"
+                onClick={onCopy}
+              >
+                {isCopied ? (
+                  <Check className="size-3 text-muted-foreground" />
+                ) : (
+                  <Copy className="size-3 text-muted-foreground" />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Copy Code</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <Dialog>
+                <DialogTrigger className=" focus-within:outline-none focus:outline-none">
+                  <Button
+                    variant={"ghost"}
+                    size="icon"
+                    className="focus-within:outline-none focus:outline-none"
+                  >
+                    <Maximize2 className="size-3 text-muted-foreground" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-[90vw] p-0 flex min-w-[90vw] max-w-[90vw] h-[90vh] max-h-[90vh] overflow-scroll ">
+                  <MermaidFullScreen code={code} />
+                </DialogContent>
+              </Dialog>
+            </TooltipTrigger>
+            <TooltipContent>Full Screen</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
-    </>
+    </div>
   );
 };

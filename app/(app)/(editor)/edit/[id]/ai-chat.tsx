@@ -37,23 +37,13 @@ const initialMessages: Message[] = [
 ];
 
 export default function Chat() {
-  const [prompt, setPrompt] = useState<string>("");
   const [initialChats, setInitialChats] = useState<Message[]>([]);
   const [hasResponseStarted, setHasResponseStarted] = useState(false);
   const { setSvg } = useSvgStore();
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       setInitialChats(chat);
-  //       console.log("chat", chat);
-  //       scrollDown();
-  //     };
-  //     fetchData();
-  //   }, [chat, diagramId]);
-
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
-      api: "/api/prompt",
+      api: "/api/claude",
       initialMessages: initialMessages,
       onResponse: () => {
         setHasResponseStarted(true);
@@ -68,10 +58,6 @@ export default function Chat() {
           error.message || "An error occurred. Please try again later."
         ),
     });
-
-  useEffect(() => {
-    setPrompt(input);
-  }, [input]);
 
   useEffect(() => {
     scrollDown();
