@@ -22,6 +22,7 @@ import { useTheme } from "next-themes";
 import { MermaidOutput } from "./mermaid-output";
 import { MermaidBlock } from "./mermaid-block";
 import { Icons } from "@/components/shared/icons";
+import { cn } from "@/lib/utils";
 
 const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following prompt : 
 
@@ -38,7 +39,11 @@ const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following
 
 const NewAiDiagram = () => {
   const [explanation, setExplanation] = React.useState(false);
-  const [selectedModel, setSelectedModel] = React.useState("gpt-3.5-turbo");
+  const [replaceCurrentDiagram, setReplaceCurrentDiagram] =
+    React.useState(false);
+  const [selectedModel, setSelectedModel] = React.useState(
+    "anthropic.claude-3-haiku-20240307-v1:0"
+  );
   const { messages, input, handleInputChange, isLoading, handleSubmit } =
     useChat({
       api: "/api/claude",
@@ -155,12 +160,23 @@ const NewAiDiagram = () => {
           </div>
 
           <div className="flex flex-row items-center">
-            <div className="flex items-center space-x-2 mr-auto">
-              <Label htmlFor="airplane-mode">Explanation</Label>
+            {/* <div className="flex items-center space-x-2 mr-auto">
+              <Label htmlFor="explanation-mode">Explanation</Label>
               <Switch
-                id="airplane-mode"
+                id="explanation-mode"
                 checked={explanation}
                 onCheckedChange={() => setExplanation(!explanation)}
+              />
+            </div> */}
+
+            <div className="flex items-center space-x-2 mr-auto">
+              <Label htmlFor="new-mode">Replace current diagram</Label>
+              <Switch
+                id="new-mode"
+                checked={replaceCurrentDiagram}
+                onCheckedChange={() =>
+                  setReplaceCurrentDiagram(!replaceCurrentDiagram)
+                }
               />
             </div>
 
@@ -183,8 +199,8 @@ const NewAiDiagram = () => {
         </fieldset>
       </form>
 
-      <div className="mb-32 w-full">
-        {messages && messages[1] ? (
+      <div className={cn("mb-32 w-full", replaceCurrentDiagram && "hidden")}>
+        {messages && messages[messages.length - 1] ? (
           <MemoizedReactMarkdown
             className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm text-black dark:text-white"
             remarkPlugins={[remarkGfm, remarkMath]}
@@ -227,7 +243,7 @@ const NewAiDiagram = () => {
               },
             }}
           >
-            {messages[1].content}
+            {messages[messages.length - 1].content}
           </MemoizedReactMarkdown>
         ) : (
           <fieldset className="grid gap-6 rounded-md border p-4">
