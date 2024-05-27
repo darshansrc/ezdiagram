@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   try {
     const { messages, system, model } = await req.json();
     const message = await client.messages.create({
-      model: model,
+      model: model ? model : "anthropic.claude-3-haiku-20240307-v1:0",
       max_tokens: 1024,
       system: system
         ? system

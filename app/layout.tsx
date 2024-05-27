@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { AuthModal } from "@/components/auth/auth-modal";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
           <AuthModal />
           <Analytics />
+          <SpeedInsights />
           <Toaster
             position="top-right"
             toastOptions={{

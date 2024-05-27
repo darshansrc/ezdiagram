@@ -23,6 +23,7 @@ import { MermaidOutput } from "./mermaid-output";
 import { MermaidBlock } from "./mermaid-block";
 import { Icons } from "@/components/shared/icons";
 import { cn } from "@/lib/utils";
+import { AiTemplateModal } from "./ai-template-modal";
 
 const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following prompt : 
 
@@ -63,7 +64,7 @@ const NewAiDiagram = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-3">
                 <Label htmlFor="top-p">Select template</Label>
-                <Input id="top-p" placeholder="flowchart" />
+                <AiTemplateModal />
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="top-k">Diagram Size</Label>

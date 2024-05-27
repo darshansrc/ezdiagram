@@ -2,7 +2,6 @@
 import { DashboardNav } from "@/components/layout/nav";
 import { NavBar } from "@/components/layout/navbar";
 import { dashboardConfig } from "@/config/dashboard";
-import Banner from "@/components/sections/banner";
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;

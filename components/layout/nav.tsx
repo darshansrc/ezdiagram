@@ -6,6 +6,14 @@ import { usePathname } from "next/navigation";
 import { SidebarNavItem } from "@/types";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/shared/icons";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
 
 interface DashboardNavProps {
   items: SidebarNavItem[];

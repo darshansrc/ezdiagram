@@ -18,8 +18,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import useUserStore from "@/store/user-store";
+import { User } from "@supabase/supabase-js";
 
-export function UserAccountNav({ user }: any) {
+export function UserAccountNav({ user }: { user: User | null }) {
   const { logout } = useUserStore();
   const handleLogout = async () => {
     logout();

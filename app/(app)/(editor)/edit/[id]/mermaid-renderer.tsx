@@ -18,7 +18,7 @@ const MermaidRenderer = memo(({ diagramCode }: MermaidRendererProps) => {
   const [container, setContainer] = useState<HTMLElement>();
   const { diagramConfig } = useDiagramConfigStore();
 
-  const { diagramTheme } = useDiagramThemeStore();
+  const { diagramTheme, setDiagramTheme } = useDiagramThemeStore();
 
   const { theme } = useTheme();
 

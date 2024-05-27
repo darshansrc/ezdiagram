@@ -191,7 +191,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
                   }
             }
           >
-            {offer.free ? "Get Started" : "Get Started"}
+            {offer.free ? "Get Started" : "Coming Soon!"}
           </Button>
         </div>
       </div>
