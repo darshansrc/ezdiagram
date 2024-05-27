@@ -54,39 +54,49 @@ export const infos: InfoLdg[] = [
 
 export const features = [
   {
-    title: "Feature 1",
+    title: "Software Developers",
     description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
+      "Visualize system architectures and workflows, enhancing team communication.",
   },
   {
-    title: "Feature 2",
+    title: "Project Managers",
     description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
+      "Design project timelines and task dependencies, improving planning and execution.",
   },
   {
-    title: "Feature 3",
+    title: "DevOps Engineers",
     description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
+      "Map deployment processes and CI/CD pipelines for smoother operations.",
   },
   {
-    title: "Feature 4",
+    title: "System Architects",
     description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
+      "Develop high-level system designs and architecture diagrams for better solutions.",
   },
   {
-    title: "Feature 5",
+    title: "Educators and Trainers",
     description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+      "Create instructional materials and diagrams for effective teaching.",
   },
   {
-    title: "Feature 6",
+    title: "Business Analysts",
     description:
-      "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
-    link: "/",
+      "Visualize business processes and data models for better decision-making.",
+  },
+  {
+    title: "Technical Writers",
+    description:
+      "Produce clear documentation and diagrams for easier understanding.",
+  },
+  {
+    title: "Data Scientists",
+    description:
+      "Illustrate data workflows and models, making insights more accessible.",
+  },
+  {
+    title: "Students",
+    description:
+      "Create diagrams for assignments and projects, improving learning outcomes.",
   },
 ];
 

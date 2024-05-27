@@ -12,7 +12,7 @@ const pricingFaqData = [
     id: "item-1",
     question: "What is EzDiagram?",
     answer:
-      "EzDiagram is a web-based application that simplifies the process of creating, editing, and generating Mermaid.js diagrams using AI.",
+      "EzDiagram is a web-based application that simplifies the process of creating, editing, and generating Mermaid.js & PlantUML diagrams using AI.",
   },
   {
     id: "item-2",
@@ -48,7 +48,7 @@ const pricingFaqData = [
     id: "item-7",
     question: "Does EzDiagram offer version control?",
     answer:
-      "Yes, EzDiagram maintains a revision history for each diagram on browser's local storage, allowing you to view and revert to previous versions if needed.",
+      "Yes, EzDiagram maintains a revision history for each diagram on our servers, allowing you to view and revert to previous versions if needed.",
   },
   {
     id: "item-8",
@@ -85,7 +85,7 @@ export function FaqSection() {
         ))}
       </Accordion>
 
-      <p className="mt-3 text-balance text-center pb-8 text-base text-muted-foreground">
+      <p className="mt-3 text-balance text-center pb-8  text-sm text-muted-foreground">
         Email{" "}
         <a
           className="font-medium text-primary hover:underline"

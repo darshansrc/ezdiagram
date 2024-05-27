@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/layout/mode-toggle";
 
 import { NewsletterForm } from "./newsletter-form";
-import { Icons } from "../shared/icons";
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
@@ -38,11 +37,8 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
 
       <div className="border-t py-2">
         <div className="container flex items-center justify-between">
-          {/* <span className="text-muted-foreground text-sm">
-            Copyright &copy; 2024. All rights reserved.
-          </span> */}
-          <p className="text-left text-sm text-muted-foreground w-1/3">
-            © 2024 EzDiagram. All rights reserved.
+          <p className="text-left text-balance text-sm text-muted-foreground w-1/3">
+            &copy; 2024 EzDiagram. All rights reserved.
           </p>
 
           <div className="flex items-center justify-end gap-3 w-1/3">

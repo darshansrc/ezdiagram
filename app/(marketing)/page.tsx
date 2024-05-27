@@ -1,4 +1,5 @@
 import { FaqSection } from "@/components/sections/faq-section";
+import { Features } from "@/components/sections/features";
 import { HeroLanding } from "@/components/sections/hero-landing";
 import { InfoLanding } from "@/components/sections/info-landing";
 import { PreviewLanding } from "@/components/sections/preview-landing";
@@ -12,7 +13,8 @@ export default function IndexPage() {
     <main>
       <HeroLanding />
       <PreviewLanding />
-      <InfoLanding data={infos[0]} reverse={true} />
+      {/* <InfoLanding data={infos[0]} reverse={true} /> */}
+      <Features />
       <PricingCards />
       <FaqSection />
       <SiteFooter />

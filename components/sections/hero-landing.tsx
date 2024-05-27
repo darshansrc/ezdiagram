@@ -27,7 +27,7 @@ export async function HeroLanding() {
         </Link>
 
         <h1 className="text-balance font-urban text-3xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
-          Elevate UML & Workflow Modeling with{" "}
+          Elevate UML & Diagram Modeling with{" "}
           <span className="text-gradient_indigo-purple font-extrabold">AI</span>
         </h1>
 
@@ -48,7 +48,7 @@ export async function HeroLanding() {
             prefetch={true}
             className={cn(
               buttonVariants({ size: "lg" }),
-              "gap-2 bg-black dark:bg-white rounded-full"
+              "gap-2 bg-black z-40 dark:bg-white rounded-full"
             )}
           >
             Start Editing

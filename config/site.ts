@@ -28,6 +28,7 @@ export const footerLinks: SidebarNavItem[] = [
     title: "Social",
     items: [
       { title: "Twitter", href: "#" },
+      { title: "Github", href: "#" },
       { title: "Contact", href: "#" },
     ],
   },
