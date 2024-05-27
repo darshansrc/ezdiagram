@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Textarea from "react-textarea-autosize";
@@ -24,27 +24,52 @@ import { MermaidBlock } from "./mermaid-block";
 import { Icons } from "@/components/shared/icons";
 import { cn } from "@/lib/utils";
 import { AiTemplateModal } from "./ai-template-modal";
+import { diagramTypes, templates } from "./ai-templates";
 
-const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following prompt : 
+const NewAiDiagram = () => {
+  const [explanation, setExplanation] = React.useState("diagram");
+  const [diagramSize, setDiagramSize] = useState("auto");
+  const [replaceCurrentDiagram, setReplaceCurrentDiagram] =
+    React.useState(false);
+  const [selectedModel, setSelectedModel] = React.useState(
+    "anthropic.claude-3-haiku-20240307-v1:0"
+  );
+  const [selectedDiagramType, setSelectedDiagramType] = useState(
+    diagramTypes[0]
+  );
+  const [templateModalOpen, setTemplateModalOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    templates.Flowchart[0]
+  );
+
+  const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following prompt,
+  
+  
+  YOU CAN FOLLOW AND TAKE IDEAS FROM THIS TEMPLATE TO CREATE YOUR DIAGRAM: 
+
+  ${selectedTemplate?.code}
 
 
 **Helpful Answer (Markdown):**
 
 \`\`\`mermaid
 // Include your Mermaid.js code block 
+${
+  diagramSize === "auto"
+    ? ""
+    : `**Diagram Size should be:** ${diagramSize} \n\n`
+}
 \`\`\`
 
+${
+  explanation === "explanation"
+    ? `**Explanation:**`
+    : "PLEASE DO NOT PROVIDE ANY EXPLANATION ONLY GIVE MERMAID CODE"
+}
 
-**Please do not give any expalanation only give diagram code
+
 `;
 
-const NewAiDiagram = () => {
-  const [explanation, setExplanation] = React.useState(false);
-  const [replaceCurrentDiagram, setReplaceCurrentDiagram] =
-    React.useState(false);
-  const [selectedModel, setSelectedModel] = React.useState(
-    "anthropic.claude-3-haiku-20240307-v1:0"
-  );
   const { messages, input, handleInputChange, isLoading, handleSubmit } =
     useChat({
       api: "/api/claude",
@@ -60,30 +85,19 @@ const NewAiDiagram = () => {
       >
         <fieldset className="grid gap-6 rounded-md border p-4">
           <legend className=" px-1 text-sm font-medium">New Diagram</legend>
-          <div className="grid gap-3">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-3">
-                <Label htmlFor="top-p">Select template</Label>
-                <AiTemplateModal />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="top-k">Diagram Size</Label>
-                <Select defaultValue="auto">
-                  <SelectTrigger
-                    id="model"
-                    className="items-start [&_[data-description]]:hidden"
-                  >
-                    <SelectValue placeholder="Select size" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background">
-                    <SelectItem value="auto">auto</SelectItem>
-                    <SelectItem value="low">small</SelectItem>
-                    <SelectItem value="medium">medium</SelectItem>
-                    <SelectItem value="high">big</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+          <div className="grid gap-5">
+            <div className="grid gap-3">
+              <Label htmlFor="top-p">Select template</Label>
+              <AiTemplateModal
+                selectedDiagramType={selectedDiagramType}
+                setSelectedDiagramType={setSelectedDiagramType}
+                templateModalOpen={templateModalOpen}
+                setTemplateModalOpen={setTemplateModalOpen}
+                selectedTemplate={selectedTemplate}
+                setSelectedTemplate={setSelectedTemplate}
+              />
             </div>
+
             <div className="grid gap-3">
               <Label htmlFor="content">Enter Prompt</Label>
               <div className="relative flex items-center justify-center  w-full overflow-hidden   rounded-md border border-input shadow-sm bg-background focus-within:ring-0.5 focus-within:ring-ring ">
@@ -100,76 +114,103 @@ const NewAiDiagram = () => {
                 />
               </div>
             </div>
-            <Label htmlFor="model">Model</Label>
-            <Select value={selectedModel} onValueChange={setSelectedModel}>
-              <SelectTrigger
-                id="model"
-                className="items-center [&_[data-description]]:hidden "
-              >
-                <SelectValue placeholder="Select a model" />
-              </SelectTrigger>
-              <SelectContent className="bg-background">
-                <SelectItem value="anthropic.claude-3-haiku-20240307-v1:0">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Icons.anthropic className="size-4" />
-                    <div className="grid gap-0.5">
-                      <p>
-                        Claude 3{" "}
-                        <span className="font-medium text-foreground">
-                          Haiku
-                        </span>
-                      </p>
-                      <p className="text-xs" data-description>
-                        Light & fast
-                      </p>
+            <div className="grid gap-3">
+              <Label htmlFor="model">Model</Label>
+              <Select value={selectedModel} onValueChange={setSelectedModel}>
+                <SelectTrigger
+                  id="model"
+                  className="items-center [&_[data-description]]:hidden "
+                >
+                  <SelectValue placeholder="Select a model" />
+                </SelectTrigger>
+                <SelectContent className="bg-background">
+                  <SelectItem value="anthropic.claude-3-haiku-20240307-v1:0">
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Icons.anthropic className="size-4" />
+                      <div className="grid gap-0.5">
+                        <p>
+                          Claude 3{" "}
+                          <span className="font-medium text-foreground">
+                            Haiku
+                          </span>
+                        </p>
+                        <p className="text-xs" data-description>
+                          Light & fast
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </SelectItem>
-                <SelectItem value="anthropic.claude-3-sonnet-20240229-v1:0">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Icons.anthropic className="size-4" />
-                    <div className="grid gap-0.5">
-                      <p>
-                        Claude 3{" "}
-                        <span className="font-medium text-foreground">
-                          Sonnet
-                        </span>
-                      </p>
-                      <p className="text-xs" data-description>
-                        Hard-working
-                      </p>
+                  </SelectItem>
+                  <SelectItem value="anthropic.claude-3-sonnet-20240229-v1:0">
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Icons.anthropic className="size-4" />
+                      <div className="grid gap-0.5">
+                        <p>
+                          Claude 3{" "}
+                          <span className="font-medium text-foreground">
+                            Sonnet
+                          </span>
+                        </p>
+                        <p className="text-xs" data-description>
+                          Hard-working
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </SelectItem>
+                  </SelectItem>
 
-                <SelectItem value="gpt-4o">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <IconOpenAI className="size-4" />
-                    <div className="grid gap-0.5">
-                      <p>
-                        GPT-4o
-                        <span className="font-medium text-foreground"></span>
-                      </p>
-                      <p className="text-xs" data-description>
-                        Powerful
-                      </p>
+                  <SelectItem value="gpt-4o">
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <IconOpenAI className="size-4" />
+                      <div className="grid gap-0.5">
+                        <p>
+                          GPT-4o
+                          <span className="font-medium text-foreground"></span>
+                        </p>
+                        <p className="text-xs" data-description>
+                          Powerful
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-3">
+                <Label htmlFor="top-p">Output Type</Label>
+                <Select value={explanation} onValueChange={setExplanation}>
+                  <SelectTrigger id="explanation">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background">
+                    <SelectItem value="diagram">Diagram</SelectItem>
+                    <SelectItem value="explanation">
+                      Diagram with Explanation
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="top-k">Diagram Size</Label>
+                <Select value={diagramSize} onValueChange={setDiagramSize}>
+                  <SelectTrigger
+                    id="size"
+                    className="items-start [&_[data-description]]:hidden"
+                  >
+                    <SelectValue placeholder="Select size" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background">
+                    <SelectItem value="auto">auto</SelectItem>
+                    <SelectItem value="low">small</SelectItem>
+                    <SelectItem value="medium">medium</SelectItem>
+                    <SelectItem value="high">big</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-row items-center">
-            {/* <div className="flex items-center space-x-2 mr-auto">
-              <Label htmlFor="explanation-mode">Explanation</Label>
-              <Switch
-                id="explanation-mode"
-                checked={explanation}
-                onCheckedChange={() => setExplanation(!explanation)}
-              />
-            </div> */}
-
             <div className="flex items-center space-x-2 mr-auto">
               <Label htmlFor="new-mode">Replace current diagram</Label>
               <Switch

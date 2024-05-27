@@ -28,9 +28,11 @@ import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import { nanoid } from "ai";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { useDebounce } from "use-debounce";
 
 export const MermaidBlock = ({ code, isLoading }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
+  const [debouncedCode] = useDebounce(code, 200);
 
   const demoid = useRef(`dome${nanoid()}`);
   const { svg: svgStore, setSvg: setSvgStore } = useSvgStore();
@@ -63,7 +65,7 @@ export const MermaidBlock = ({ code, isLoading }) => {
 
   useEffect(() => {
     reRender();
-  }, [container, code, theme, demoid]);
+  }, [container, debouncedCode, theme, demoid]);
 
   const refElement = useCallback((node: HTMLDivElement) => {
     if (node !== null) {

@@ -1,63 +1,52 @@
-import MermaidPreview from "@/components/dashboard/mermaid-preview";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectTrigger } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { Suspense, useState } from "react";
-import MermaidRenderer from "./mermaid-renderer";
 import MermaidTemplatePreview from "./mermaid-template-preview";
-import { templates } from "./ai-templates";
+import { templates, diagramTypes } from "./ai-templates";
 
-export function AiTemplateModal() {
-  const diagramTypes = [
-    "Flowchart",
-    "Sequence Diagram",
-    "Mindmap",
-    "Class Diagram",
-    "State Diagram",
-    "ER Diagram",
-    "C4 Diagram",
-    "User Journey",
-    "Gantt Diagram",
-    "Pie Chart",
-    "Quadrant Chart",
-    "Requirement Diagram",
-    "Git Graph",
-    "Timeline",
-    "Sankey Diagram",
-    "XY Chart",
-    "Block Diagram",
-  ];
+export interface AiTemplateModalProps {
+  selectedDiagramType: string;
+  setSelectedDiagramType: React.Dispatch<React.SetStateAction<string>>;
+  templateModalOpen: boolean;
+  setTemplateModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedTemplate: any;
+  setSelectedTemplate: React.Dispatch<React.SetStateAction<any>>;
+}
 
-  const [selectedDiagram, setSelectedDiagram] = useState("auto");
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
+export function AiTemplateModal(props: AiTemplateModalProps) {
+  const {
+    selectedDiagramType,
+    setSelectedDiagramType,
+    templateModalOpen,
+    setTemplateModalOpen,
+    selectedTemplate,
+    setSelectedTemplate,
+  } = props;
 
-  const handleDiagramClick = (diagram) => {
-    setSelectedDiagram(diagram);
-    setSelectedTemplate(null); // Reset selected template when changing diagram type
+  const handleDiagramClick = (diagram: string) => {
+    setSelectedDiagramType(diagram);
+    setSelectedTemplate(null);
   };
 
-  const handleTemplateClick = (template) => {
+  const handleTemplateClick = (template: any) => {
     setSelectedTemplate(template);
+    setTemplateModalOpen(false);
   };
 
   return (
-    <Dialog>
-      <Select value={selectedDiagram}>
-        <DialogTrigger asChild>
+    <Dialog open={templateModalOpen} onOpenChange={setTemplateModalOpen}>
+      <Select value={selectedDiagramType}>
+        <DialogTrigger className="max-w-full" asChild>
           <SelectTrigger>
+            {selectedDiagramType} -{" "}
             {selectedTemplate?.name || "Select Diagram Type"}
           </SelectTrigger>
         </DialogTrigger>
@@ -77,7 +66,7 @@ export function AiTemplateModal() {
                 <div
                   key={diagram}
                   className={`text-sm cursor-pointer p-2 px-4 my-2 rounded-lg ${
-                    selectedDiagram === diagram
+                    selectedDiagramType === diagram
                       ? "bg-foreground text-white  dark:text-neutral-900"
                       : "hover:bg-muted"
                   }`}
@@ -89,10 +78,10 @@ export function AiTemplateModal() {
             </div>
           </ScrollArea>
           <div className="flex-1 px-4">
-            {selectedDiagram !== "auto" && (
+            {selectedDiagramType !== "auto" && (
               <ScrollArea className="h-[75vh]  ">
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-4  ">
-                  {templates[selectedDiagram]?.map((template) => (
+                  {templates[selectedDiagramType]?.map((template) => (
                     <div
                       key={template.name}
                       className={`border flex flex-col justify-center items-center p-4 rounded-lg  cursor-pointer ${

@@ -1,3 +1,23 @@
+export const diagramTypes = [
+  "Flowchart",
+  "Sequence Diagram",
+  "Mindmap",
+  "Class Diagram",
+  "State Diagram",
+  "ER Diagram",
+  "C4 Diagram",
+  "User Journey",
+  "Gantt Diagram",
+  "Pie Chart",
+  "Quadrant Chart",
+  "Requirement Diagram",
+  "Git Graph",
+  "Timeline",
+  "Sankey Diagram",
+  "XY Chart",
+  "Block Diagram",
+];
+
 export const templates = {
   Flowchart: [
     {
