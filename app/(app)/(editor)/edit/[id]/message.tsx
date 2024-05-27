@@ -74,6 +74,7 @@ export function BotMessage({
               return match && match[1] === "mermaid" ? (
                 <MermaidBlock
                   isLoading={isLoading}
+                  replaceCurrentDiagram={false}
                   code={String(children).replace(/\n$/, "")}
                 />
               ) : (
