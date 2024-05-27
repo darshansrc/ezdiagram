@@ -2,23 +2,36 @@
 import React, { useState, useEffect } from "react";
 import { BotMessage, SpinnerMessage, UserMessage } from "./message";
 import { useChat } from "ai/react";
-import { ArrowUp, Paperclip } from "lucide-react";
+import { ArrowUp, Paperclip, Settings, Sparkle } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { Message } from "ai";
+
 import Textarea from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
+
 import useSvgStore from "@/store/svg-store";
+import { Select, SelectContent, SelectItem } from "@/components/ui/select";
+import { SelectTrigger } from "@radix-ui/react-select";
+import { useDiagramCodeStore } from "@/store/editor-store";
 
 export default function Chat() {
-  const [initialChats, setInitialChats] = useState<Message[]>([]);
   const [hasResponseStarted, setHasResponseStarted] = useState(false);
+  const [chatType, setChatType] = useState("current");
   const { setSvg } = useSvgStore();
+  const { diagramCode } = useDiagramCodeStore();
+
+  const SYSTEM_PROMPT = `${
+    chatType === "current"
+      ? `Your task is to help user update or explain mermaid.js diagram based on the current code: ${diagramCode}`
+      : `You are an expert in mermaid.js and tasked with translating user requirements into technical specifications for creating mermaid.js diagrams to code. You can chat with user if user doesn't ask for a diagram`
+  }:`;
 
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       api: "/api/claude",
-
+      body: {
+        system: SYSTEM_PROMPT,
+        model: "anthropic.claude-3-haiku-20240307-v1:0",
+      },
       onResponse: () => {
         setHasResponseStarted(true);
       },
@@ -96,9 +109,22 @@ export default function Chat() {
               className="resize-none bg-background text-sm border-0 max-h-60 overflow-y-scroll no-scrollbar focus-within:outline-none p-2 h-12 font-medium w-full px-12 shadow-none focus-visible:ring-0"
             />
             <div className="flex absolute top-[50%] translate-y-[-50%] left-1 p-1 items-center ">
-              <Button variant="ghost" size="icon" className=" rounded-full">
+              {/* <Button variant="ghost" size="icon" className=" rounded-full">
                 <Paperclip className="size-4    " />
-              </Button>
+              </Button> */}
+              <Select value={chatType} onValueChange={setChatType}>
+                <SelectTrigger asChild>
+                  <Button variant="ghost" size="icon" className=" rounded-full">
+                    <Sparkle className="size-4 text-muted-foreground    " />
+                  </Button>
+                </SelectTrigger>
+                <SelectContent className="bg-background">
+                  <SelectItem value="current">
+                    Chat with current diagram
+                  </SelectItem>
+                  <SelectItem value="new">Normal Chat</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="flex absolute top-[50%] translate-y-[-50%]  right-1 p-1 items-center ">
               <Button

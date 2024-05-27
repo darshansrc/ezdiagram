@@ -9,14 +9,15 @@ const client = new AnthropicBedrock({
 
 export async function POST(req: Request) {
   try {
-    const { messages, system, model } = await req.json();
+    const { messages, system, model, isCompletion } = await req.json();
+    console.log(messages, system, model);
     const message = await client.messages.create({
       model: model ? model : "anthropic.claude-3-haiku-20240307-v1:0",
       max_tokens: 1024,
       system: system
         ? system
         : "You are an expert in mermaid.js and tasked with translating user requirements into technical specifications for creating mermaid.js diagrams to code. You can chat with user if user doesn't ask for a diagram",
-      messages,
+      messages: isCompletion ? [messages.slice(-1)[0]] : messages,
       stream: true,
     });
     const stream = AnthropicStream(message);

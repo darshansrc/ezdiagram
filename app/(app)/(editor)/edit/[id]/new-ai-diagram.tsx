@@ -42,38 +42,39 @@ const NewAiDiagram = () => {
     templates.Flowchart[0]
   );
 
-  const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following prompt,
-  
-  
-  YOU CAN FOLLOW AND TAKE IDEAS FROM THIS TEMPLATE TO CREATE YOUR DIAGRAM: 
+  const SYSTEM_PROMPT = `Generate a mermaid.js diagram code based on the following prompt. You should use the provided template as a starting point.
 
-  ${selectedTemplate?.code}
-
-
-**Helpful Answer (Markdown):**
-
-\`\`\`mermaid
-// Include your Mermaid.js code block 
+**Template:**
 ${
-  diagramSize === "auto"
-    ? ""
-    : `**Diagram Size should be:** ${diagramSize} \n\n`
+  selectedTemplate?.code
+    ? `\`\`\`mermaid\n${selectedTemplate.code}\n\`\`\``
+    : "No template provided."
 }
+
+**Diagram Size:**
+${
+  diagramSize !== "auto"
+    ? `The diagram size should be: ${diagramSize}`
+    : 'No specific size specified (use "auto").'
+}
+
+**Your Mermaid.js Code:**
+\`\`\`mermaid
+// Include your Mermaid.js code here
 \`\`\`
 
-${
-  explanation === "explanation"
-    ? `**Explanation:**`
-    : "PLEASE DO NOT PROVIDE ANY EXPLANATION ONLY GIVE MERMAID CODE"
-}
-
-
+**Note** Do not provide any explanation your only output should be mermaid.js code in the above format
 `;
 
   const { messages, input, handleInputChange, isLoading, handleSubmit } =
     useChat({
       api: "/api/claude",
-      body: { system: SYSTEM_PROMPT, explanation, model: selectedModel },
+      body: {
+        system: SYSTEM_PROMPT,
+        explanation,
+        model: selectedModel,
+        isCompletion: true,
+      },
     });
   const { theme } = useTheme();
 
@@ -175,8 +176,8 @@ ${
               </Select>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-3">
+            <div className="grid grid-cols-1 gap-4">
+              {/* <div className="grid gap-3">
                 <Label htmlFor="top-p">Output Type</Label>
                 <Select value={explanation} onValueChange={setExplanation}>
                   <SelectTrigger id="explanation">
@@ -189,7 +190,7 @@ ${
                     </SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
               <div className="grid gap-3">
                 <Label htmlFor="top-k">Diagram Size</Label>
                 <Select value={diagramSize} onValueChange={setDiagramSize}>
@@ -269,6 +270,7 @@ ${
                 const match = /language-(\w+)/.exec(className || "");
                 return match && match[1] === "mermaid" ? (
                   <MermaidBlock
+                    replaceCurrentDiagram={replaceCurrentDiagram}
                     isLoading={isLoading}
                     code={String(children).replace(/\n$/, "")}
                   />

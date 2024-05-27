@@ -30,7 +30,7 @@ import { nanoid } from "ai";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useDebounce } from "use-debounce";
 
-export const MermaidBlock = ({ code, isLoading }) => {
+export const MermaidBlock = ({ code, isLoading, replaceCurrentDiagram }) => {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2000 });
   const [debouncedCode] = useDebounce(code, 200);
 
@@ -55,7 +55,9 @@ export const MermaidBlock = ({ code, isLoading }) => {
         const str = await mermaid.render(demoid.current, code);
         container.innerHTML = str.svg;
         setSvgStore(str.svg);
-        setDiagramCode(code);
+        if (replaceCurrentDiagram) {
+          setDiagramCode(code);
+        }
       } catch (error) {
         container.innerHTML = `${svgStore}`;
         console.error(error);
@@ -80,7 +82,7 @@ export const MermaidBlock = ({ code, isLoading }) => {
   };
 
   return (
-    <div className="flex relative bg-background flex-col border py-6 pt-12 min-w-full  rounded-md p-2">
+    <div className="flex items-center justify-center relative bg-background flex-col border py-6 pt-12 min-w-full  rounded-md p-2">
       <Fragment>
         <code id={demoid.current} className="text-[0px] " />
         <code ref={refElement} data-name="mermaid" className="text-[0px] " />
