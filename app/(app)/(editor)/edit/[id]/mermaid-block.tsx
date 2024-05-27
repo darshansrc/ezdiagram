@@ -30,7 +30,7 @@ import { toast } from "react-hot-toast";
 import { nanoid } from "ai";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-export const MermaidBlock = memo(
+const MermaidBlock = memo(
   async ({
     code,
     isLoading,
@@ -154,3 +154,6 @@ export const MermaidBlock = memo(
     );
   }
 );
+
+MermaidBlock.displayName = "MermaidBlock";
+export { MermaidBlock };
