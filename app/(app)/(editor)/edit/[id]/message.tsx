@@ -72,11 +72,13 @@ export function BotMessage({
 
               const match = /language-(\w+)/.exec(className || "");
               return match && match[1] === "mermaid" ? (
-                <MermaidBlock
-                  isLoading={isLoading}
-                  replaceCurrentDiagram={false}
-                  code={String(children).replace(/\n$/, "")}
-                />
+                <Suspense>
+                  <MermaidBlock
+                    isLoading={isLoading}
+                    replaceCurrentDiagram={false}
+                    code={String(children).replace(/\n$/, "")}
+                  />
+                </Suspense>
               ) : (
                 <div data-color-mode={theme}>
                   <MarkdownPreview

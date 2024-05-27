@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Textarea from "react-textarea-autosize";
@@ -244,51 +244,15 @@ ${
 
       <div className={cn("mb-32 w-full", replaceCurrentDiagram && "hidden")}>
         {messages && messages[messages.length - 1] ? (
-          <MemoizedReactMarkdown
-            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm text-black dark:text-white"
-            remarkPlugins={[remarkGfm, remarkMath]}
-            components={{
-              code({
-                children,
-                inline,
-                className,
-                ...props
-              }: {
-                children: React.ReactNode;
-                inline?: boolean;
-                className?: string;
-                props?: any;
-              }) {
-                if (inline) {
-                  return (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  );
-                }
-
-                const match = /language-(\w+)/.exec(className || "");
-                return match && match[1] === "mermaid" ? (
-                  <MermaidBlock
-                    replaceCurrentDiagram={replaceCurrentDiagram}
-                    isLoading={isLoading}
-                    code={String(children).replace(/\n$/, "")}
-                  />
-                ) : (
-                  <div data-color-mode={theme}>
-                    <MarkdownPreview
-                      className=" text-black dark:text-white font-inter"
-                      source={`\`\`\`${match && match[1]}\n${String(
-                        children
-                      ).replace(/\n$/, "")}\n\`\`\``}
-                    />
-                  </div>
-                );
-              },
-            }}
-          >
-            {messages[messages.length - 1].content}
-          </MemoizedReactMarkdown>
+          <Suspense>
+            <MermaidBlock
+              replaceCurrentDiagram={replaceCurrentDiagram}
+              isLoading={isLoading}
+              code={messages[messages.length - 1].content
+                .replace(/^```mermaid\n|```$/g, "")
+                .trim()}
+            />
+          </Suspense>
         ) : (
           <fieldset className="grid gap-6 rounded-md border p-4">
             <legend className=" px-1 text-[12px] font-medium font-sans ">

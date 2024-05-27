@@ -317,4 +317,42 @@ flowchart TD
       code: "sequenceDiagram; participant A; participant B; A->>B: Message;",
     },
   ],
+  Mindmap: [
+    {
+      name: "Basic Mindmap",
+      code: `
+mindmap
+  root((mindmap))
+    Origins
+      Long history
+      Popularisation
+        British popular psychology author Tony Buzan
+    Research
+      On effectiveness<br/>and features
+      On Automatic creation
+        Uses
+            Creative techniques
+            Strategic planning
+            Argument mapping
+    Tools
+      Pen and paper
+      Mermaid
+
+`,
+    },
+  ],
+  Timeline: [
+    {
+      name: "Basic Timeline",
+      code: `
+timeline
+    title History of Social Media Platform
+    2002 : LinkedIn
+    2004 : Facebook
+         : Google
+    2005 : Youtube
+    2006 : Twitter
+`,
+    },
+  ],
 };

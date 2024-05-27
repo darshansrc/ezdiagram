@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Textarea from "react-textarea-autosize";
@@ -208,11 +208,13 @@ const UpdateAiDiagram = () => {
 
                 const match = /language-(\w+)/.exec(className || "");
                 return match && match[1] === "mermaid" ? (
-                  <MermaidBlock
-                    replaceCurrentDiagram={replaceCurrentDiagram}
-                    isLoading={isLoading}
-                    code={String(children).replace(/\n$/, "")}
-                  />
+                  <Suspense>
+                    <MermaidBlock
+                      replaceCurrentDiagram={replaceCurrentDiagram}
+                      isLoading={isLoading}
+                      code={String(children).replace(/\n$/, "")}
+                    />
+                  </Suspense>
                 ) : (
                   <div data-color-mode={theme}>
                     <MarkdownPreview

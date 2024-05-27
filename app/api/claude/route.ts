@@ -14,14 +14,13 @@ export async function POST(req: Request) {
     const message = await client.messages.create({
       model: model ? model : "anthropic.claude-3-haiku-20240307-v1:0",
       max_tokens: 1024,
+      stream: true,
       system: system
         ? system
         : "You are an expert in mermaid.js and tasked with translating user requirements into technical specifications for creating mermaid.js diagrams to code. You can chat with user if user doesn't ask for a diagram",
       messages: isCompletion ? [messages.slice(-1)[0]] : messages,
-      stream: true,
     });
-    const stream = AnthropicStream(message);
-    return new StreamingTextResponse(stream);
+    return new StreamingTextResponse(AnthropicStream(message));
   } catch (err) {
     return new Response(err.message, { status: 500 });
   }
