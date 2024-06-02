@@ -46,7 +46,6 @@ import { IconSpinner } from "@/components/ui/icons";
 import { Icons } from "@/components/shared/icons";
 import DiagramHistory from "./diagram-history";
 import SaveDiagram from "./save-diagram";
-import MonacoEditor from "../../monaco-editor";
 
 const navItems = [
   {
@@ -79,11 +78,11 @@ const navItems = [
   //   icon: <Settings className="size-5" />,
   //   tab: "settings",
   // },
-  {
-    label: "Share",
-    icon: <CloudDownload className="size-5" />,
-    tab: "share",
-  },
+  // {
+  //   label: "Share",
+  //   icon: <CloudDownload className="size-5" />,
+  //   tab: "share",
+  // },
 ];
 
 function EditorDashboard({ diagram }: { diagram: Diagram }) {
