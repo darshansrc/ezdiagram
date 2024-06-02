@@ -6,7 +6,7 @@ import Chat from "./ai-chat";
 import NewAiDiagram from "./new-ai-diagram";
 import UpdateAiDiagram from "./update-ai-diagram";
 
-const AIEditor = () => {
+const AIEditor = ({ diagramId }: { diagramId: string }) => {
   const { currentAITab, setCurrentAITab } = useAITabStore();
   return (
     <Tabs
@@ -56,7 +56,7 @@ const AIEditor = () => {
       </TabsContent>
 
       <TabsContent value="chat" className="relative h-[calc(100vh-110px)]">
-        <Chat />
+        <Chat diagramId={diagramId} />
       </TabsContent>
     </Tabs>
   );

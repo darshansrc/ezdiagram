@@ -103,7 +103,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
   const renderTabContent = (currentTab: Tab) => {
     switch (currentTab) {
       case "ai":
-        return <AIEditor />;
+        return <AIEditor diagramId={diagram.id} />;
       case "code":
         return <CodeEditor diagramId={diagram.id} />;
       case "config":
@@ -115,7 +115,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
       case "settings":
         return <div>Settings</div>;
       default:
-        return <AIEditor />;
+        return <AIEditor diagramId={diagram.id} />;
     }
   };
 

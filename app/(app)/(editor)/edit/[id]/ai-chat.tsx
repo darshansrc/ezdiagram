@@ -10,12 +10,15 @@ import useSvgStore from "@/store/svg-store";
 import { Select, SelectContent, SelectItem } from "@/components/ui/select";
 import { SelectTrigger } from "@radix-ui/react-select";
 import { useDiagramCodeStore } from "@/store/editor-store";
+import useChatStore from "@/store/chat-store";
+import { Message } from "ai";
 
-export default function Chat() {
+export default function Chat({ diagramId }: { diagramId: string }) {
   const [hasResponseStarted, setHasResponseStarted] = useState(false);
   const [chatType, setChatType] = useState("current");
   const { setSvg } = useSvgStore();
   const { diagramCode } = useDiagramCodeStore();
+  const { chats, addChat, getChats } = useChatStore();
 
   const SYSTEM_PROMPT = `${
     chatType === "current"
@@ -26,17 +29,19 @@ export default function Chat() {
   const { messages, input, isLoading, handleInputChange, handleSubmit } =
     useChat({
       api: "/api/claude",
+      initialMessages: getChats(diagramId),
       body: {
         system: SYSTEM_PROMPT,
         model: "anthropic.claude-3-haiku-20240307-v1:0",
       },
+
       onResponse: () => {
         setHasResponseStarted(true);
       },
-      onFinish: () => {
+      onFinish: (message: Message) => {
         setHasResponseStarted(false);
         setSvg("");
-        // fetchChat(diagramId);
+        addChat(diagramId, message.content, message.role);
       },
       onError: (error) =>
         toast.error(
@@ -62,6 +67,7 @@ export default function Chat() {
   const handleKeyDown = (e) => {
     if ((e.key === "Enter" || e.key === "Return") && !e.shiftKey) {
       e.preventDefault();
+      addChat(diagramId, input, "user");
       handleSubmit(e);
     }
   };

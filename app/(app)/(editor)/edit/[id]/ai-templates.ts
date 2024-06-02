@@ -311,10 +311,61 @@ flowchart TD
     },
   ],
   "Sequence Diagram": [
-    { name: "Basic Sequence", code: "sequenceDiagram; A->>B: Hello;" },
     {
-      name: "Advanced Sequence",
-      code: "sequenceDiagram; participant A; participant B; A->>B: Message;",
+      name: "Basic Sequence",
+      code: `
+sequenceDiagram
+  participant User
+  participant System
+  User->>System: Request data
+  activate System
+  System-->>User: Return data
+  deactivate System
+
+  User->>System: Process information
+  alt Data valid
+      System-->>User: Data processed successfully
+  else Data invalid
+      System-->>User: Error processing data
+  end
+
+  opt Additional Process
+      User->>System: Perform additional task
+      System-->>User: Task completed
+  end
+
+  note over User, System: Interaction flow
+    `,
+    },
+    {
+      name: "With Actors",
+      code: `
+sequenceDiagram
+  actor Alice
+  actor Bob
+  Alice->>Bob: Hello Bob, how are you?
+      `,
+    },
+    {
+      name: "With Background Highlight",
+      code: `
+sequenceDiagram
+  participant User
+  participant FrontEnd
+  participant BackEnd
+
+  rect rgb(129, 178, 154)
+  note right of User: User sends a request to view data.
+  User->>+FrontEnd: Request for data
+  end
+  
+  rect rgb(234, 184, 135)
+  FrontEnd->>+BackEnd: Fetch data request
+  BackEnd-->>-FrontEnd: Data payload
+  end
+  
+  FrontEnd-->>-User: Display data
+      `,
     },
   ],
   Mindmap: [

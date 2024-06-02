@@ -199,6 +199,7 @@ export async function createNewDiagram(diagram: NewDiagram) {
     .insert({
       id: id,
       user_id: user?.id,
+      code: `graph TD\n  A[Your Diagram will appear here! 🤘📈]\n `,
       diagram_name: diagram.diagram_name,
       diagram_language: diagram.diagram_language,
     })
