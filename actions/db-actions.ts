@@ -2,6 +2,9 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { Tables } from "@/types/supabase";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { customAlphabet, nanoid } from "nanoid";
+import { redirect } from "next/navigation";
 export type Diagram = Tables<"diagrams">;
 
 export async function getAllDiagrams(): Promise<Diagram[] | null> {
@@ -173,4 +176,37 @@ export async function fetchDiagramVersions(id: string) {
     return error.message;
   }
   return data;
+}
+
+interface NewDiagram {
+  diagram_name: string;
+  diagram_language?: string;
+}
+
+export async function createNewDiagram(diagram: NewDiagram) {
+  const newNanoid = customAlphabet("abcdefhiklmnorstuvwxz", 10);
+  const id = newNanoid();
+
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user && user.id) {
+    return;
+  }
+  const { data, error } = await supabase
+    .from("diagrams")
+    .insert({
+      id: id,
+      user_id: user?.id,
+      diagram_name: diagram.diagram_name,
+      diagram_language: diagram.diagram_language,
+    })
+    .single();
+
+  if (error) {
+    console.error("Error creating new diagram:", error);
+    return error.message;
+  }
+  redirect(`/edit/${id}`);
 }

@@ -12,12 +12,23 @@ import DiagramsList from "@/components/dashboard/diagrams-table";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 import { IconSpinner } from "@/components/ui/icons";
 import { Icons } from "@/components/shared/icons";
+import { createNewDiagram } from "@/actions/db-actions";
 
 export default function DashboardPage() {
   const { dashboardType, changeDashboardType } = useDashboardView();
   const { diagrams, isFetching, fetchDiagrams } = useDiagramStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+
+  const handleCreateDiagram = async () => {
+    setIsLoading(true);
+    await createNewDiagram({
+      diagram_name: "Untitled Diagram",
+      diagram_language: "mermaid",
+    });
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     fetchDiagrams();
@@ -28,8 +39,13 @@ export default function DashboardPage() {
       <DashboardShell>
         <DashboardHeader heading="Your Diagrams">
           <div className="flex flex-row items-center gap-2">
-            <Button className="rounded-full">
-              <PlusIcon size={16} className="mr-2 " /> New Diagram
+            <Button className="rounded-full" onClick={handleCreateDiagram}>
+              {isLoading ? (
+                <IconSpinner className="mr-2 size-4" />
+              ) : (
+                <PlusIcon className="mr-2 size-4" />
+              )}{" "}
+              New Diagram
             </Button>
           </div>
         </DashboardHeader>
@@ -55,7 +71,7 @@ export default function DashboardPage() {
       <DashboardShell>
         <DashboardHeader heading="Your Diagrams">
           <div className="flex flex-row items-center gap-2">
-            <Button className="rounded-full">
+            <Button className="rounded-full" onClick={handleCreateDiagram}>
               <PlusIcon size={16} className="mr-2 " /> New Diagram
             </Button>
           </div>
@@ -68,8 +84,17 @@ export default function DashboardPage() {
             <EmptyPlaceholder.Description>
               You don&apos;t have any diagrams yet. Start creating!
             </EmptyPlaceholder.Description>
-            <Button variant="outline" className="rounded-full">
-              <PlusIcon size={16} className="mr-2 " /> New Diagram
+            <Button
+              variant="outline"
+              className="rounded-full"
+              onClick={handleCreateDiagram}
+            >
+              {isLoading ? (
+                <IconSpinner className="mr-2 size-4" />
+              ) : (
+                <PlusIcon className="mr-2 size-4" />
+              )}{" "}
+              New Diagram
             </Button>
           </EmptyPlaceholder>
         </div>
@@ -98,8 +123,13 @@ export default function DashboardPage() {
                 <List size={16} />
               </TabsTrigger>
             </TabsList>
-            <Button className="rounded-full">
-              <PlusIcon size={16} className="mr-2 " /> New Diagram
+            <Button className="rounded-full" onClick={handleCreateDiagram}>
+              {isLoading ? (
+                <IconSpinner className="mr-2 size-4" />
+              ) : (
+                <PlusIcon className="mr-2 size-4" />
+              )}{" "}
+              New Diagram
             </Button>
           </div>
         </DashboardHeader>

@@ -4,10 +4,8 @@ import { BotMessage, SpinnerMessage, UserMessage } from "./message";
 import { useChat } from "ai/react";
 import { ArrowUp, Paperclip, Settings, Sparkle } from "lucide-react";
 import { toast } from "react-hot-toast";
-
 import Textarea from "react-textarea-autosize";
 import { Button } from "@/components/ui/button";
-
 import useSvgStore from "@/store/svg-store";
 import { Select, SelectContent, SelectItem } from "@/components/ui/select";
 import { SelectTrigger } from "@radix-ui/react-select";

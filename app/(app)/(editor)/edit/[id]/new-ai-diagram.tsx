@@ -2,7 +2,6 @@ import React, { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Textarea from "react-textarea-autosize";
-import MarkdownPreview from "@uiw/react-markdown-preview";
 import {
   Select,
   SelectContent,
@@ -10,16 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { IconOpenAI, IconSpinner } from "@/components/ui/icons";
 import { Switch } from "@/components/ui/switch";
 import { CornerDownLeft } from "lucide-react";
 import { useChat } from "ai/react";
-import { MemoizedReactMarkdown } from "./markdown";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
-import { useTheme } from "next-themes";
-import { MermaidOutput } from "./mermaid-output";
 import { MermaidBlock } from "./mermaid-block";
 import { Icons } from "@/components/shared/icons";
 import { cn } from "@/lib/utils";
@@ -27,7 +20,6 @@ import { AiTemplateModal } from "./ai-template-modal";
 import { diagramTypes, templates } from "./ai-templates";
 
 const NewAiDiagram = () => {
-  const [explanation, setExplanation] = React.useState("diagram");
   const [diagramSize, setDiagramSize] = useState("auto");
   const [replaceCurrentDiagram, setReplaceCurrentDiagram] =
     React.useState(false);
@@ -51,12 +43,6 @@ ${
     : "No template provided."
 }
 
-**Diagram Size:**
-${
-  diagramSize !== "auto"
-    ? `The diagram size should be: ${diagramSize}`
-    : 'No specific size specified (use "auto").'
-}
 
 **Your Mermaid.js Code:**
 \`\`\`mermaid
@@ -71,12 +57,10 @@ ${
       api: "/api/claude",
       body: {
         system: SYSTEM_PROMPT,
-        explanation,
         model: selectedModel,
         isCompletion: true,
       },
     });
-  const { theme } = useTheme();
 
   return (
     <div className="relative flex flex-col w-full overflow-scroll no-scrollbar max-h-full items-center gap-4 ">
@@ -176,8 +160,8 @@ ${
               </Select>
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
-              {/* <div className="grid gap-3">
+            {/* <div className="grid grid-cols-1 gap-0">
+             <div className="grid gap-3">
                 <Label htmlFor="top-p">Output Type</Label>
                 <Select value={explanation} onValueChange={setExplanation}>
                   <SelectTrigger id="explanation">
@@ -190,7 +174,7 @@ ${
                     </SelectItem>
                   </SelectContent>
                 </Select>
-              </div> */}
+              </div> 
               <div className="grid gap-3">
                 <Label htmlFor="top-k">Diagram Size</Label>
                 <Select value={diagramSize} onValueChange={setDiagramSize}>
@@ -202,13 +186,13 @@ ${
                   </SelectTrigger>
                   <SelectContent className="bg-background">
                     <SelectItem value="auto">auto</SelectItem>
-                    <SelectItem value="low">small</SelectItem>
+                    <SelectItem value="small">small</SelectItem>
                     <SelectItem value="medium">medium</SelectItem>
-                    <SelectItem value="high">big</SelectItem>
+                    <SelectItem value="big">big</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
+              </div> 
+            </div> */}
           </div>
 
           <div className="flex flex-row items-center">
@@ -243,7 +227,8 @@ ${
       </form>
 
       <div className={cn("mb-32 w-full", replaceCurrentDiagram && "hidden")}>
-        {messages && messages[messages.length - 1] ? (
+        {(messages && messages[messages.length - 1] && !isLoading) ||
+        (messages && messages[messages.length - 1] && replaceCurrentDiagram) ? (
           <Suspense>
             <MermaidBlock
               replaceCurrentDiagram={replaceCurrentDiagram}
@@ -253,6 +238,11 @@ ${
                 .trim()}
             />
           </Suspense>
+        ) : isLoading ? (
+          <div className="flex items-center justify-center relative bg-background flex-col border py-6 pt-12 min-w-full  rounded-md p-2">
+            <Icons.spinner />
+            <p className="text-sm text-muted-foreground">Generating Diagram</p>
+          </div>
         ) : (
           <fieldset className="grid gap-6 rounded-md border p-4">
             <legend className=" px-1 text-[12px] font-medium font-sans ">

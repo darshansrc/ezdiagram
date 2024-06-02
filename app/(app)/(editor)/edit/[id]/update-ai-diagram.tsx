@@ -182,54 +182,22 @@ const UpdateAiDiagram = () => {
       </form>
 
       <div className={cn("mb-32 w-full", replaceCurrentDiagram && "hidden")}>
-        {messages && messages[messages.length - 1] ? (
-          <MemoizedReactMarkdown
-            className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 text-sm text-black dark:text-white"
-            remarkPlugins={[remarkGfm, remarkMath]}
-            components={{
-              code({
-                children,
-                inline,
-                className,
-                ...props
-              }: {
-                children: React.ReactNode;
-                inline?: boolean;
-                className?: string;
-                props?: any;
-              }) {
-                if (inline) {
-                  return (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  );
-                }
-
-                const match = /language-(\w+)/.exec(className || "");
-                return match && match[1] === "mermaid" ? (
-                  <Suspense>
-                    <MermaidBlock
-                      replaceCurrentDiagram={replaceCurrentDiagram}
-                      isLoading={isLoading}
-                      code={String(children).replace(/\n$/, "")}
-                    />
-                  </Suspense>
-                ) : (
-                  <div data-color-mode={theme}>
-                    <MarkdownPreview
-                      className=" text-black dark:text-white font-inter"
-                      source={`\`\`\`${match && match[1]}\n${String(
-                        children
-                      ).replace(/\n$/, "")}\n\`\`\``}
-                    />
-                  </div>
-                );
-              },
-            }}
-          >
-            {messages[messages.length - 1].content}
-          </MemoizedReactMarkdown>
+        {(messages && messages[messages.length - 1] && !isLoading) ||
+        (messages && messages[messages.length - 1] && replaceCurrentDiagram) ? (
+          <Suspense>
+            <MermaidBlock
+              replaceCurrentDiagram={replaceCurrentDiagram}
+              isLoading={isLoading}
+              code={messages[messages.length - 1].content
+                .replace(/^```mermaid\n|```$/g, "")
+                .trim()}
+            />
+          </Suspense>
+        ) : isLoading ? (
+          <div className="flex items-center justify-center relative bg-background flex-col border py-6 pt-12 min-w-full  rounded-md p-2">
+            <Icons.spinner />
+            <p className="text-sm text-muted-foreground">Generating Diagram</p>
+          </div>
         ) : (
           <fieldset className="grid gap-6 rounded-md border p-4">
             <legend className=" px-1 text-[12px] font-medium font-sans ">

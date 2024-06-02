@@ -46,6 +46,7 @@ import { IconSpinner } from "@/components/ui/icons";
 import { Icons } from "@/components/shared/icons";
 import DiagramHistory from "./diagram-history";
 import SaveDiagram from "./save-diagram";
+import MonacoEditor from "../../monaco-editor";
 
 const navItems = [
   {
@@ -73,10 +74,15 @@ const navItems = [
     icon: <Bookmark className="size-5" />,
     tab: "saved",
   },
+  // {
+  //   label: "Settings",
+  //   icon: <Settings className="size-5" />,
+  //   tab: "settings",
+  // },
   {
-    label: "Settings",
-    icon: <Settings className="size-5" />,
-    tab: "settings",
+    label: "Share",
+    icon: <CloudDownload className="size-5" />,
+    tab: "share",
   },
 ];
 
@@ -110,7 +116,7 @@ function EditorDashboard({ diagram }: { diagram: Diagram }) {
       case "settings":
         return <div>Settings</div>;
       default:
-        return <div>AI</div>;
+        return <AIEditor />;
     }
   };
 

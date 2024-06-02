@@ -10,13 +10,7 @@ import mermaid from "mermaid";
 import useSvgStore from "@/store/svg-store";
 import { useTheme } from "next-themes";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import {
-  BetweenHorizontalStart,
-  Check,
-  Copy,
-  CopyCheck,
-  Maximize2,
-} from "lucide-react";
+import { BetweenHorizontalStart, Check, Copy, Maximize2 } from "lucide-react";
 import MermaidFullScreen from "./mermaid-full-screen";
 import { useDiagramCodeStore } from "@/store/editor-store";
 import {
@@ -75,7 +69,7 @@ const MermaidBlock = memo(
 
     useEffect(() => {
       reRender();
-    }, [container, code, isLoading, theme, demoid]);
+    }, [container, code, theme, demoid]);
 
     const refElement = useCallback((node: HTMLDivElement) => {
       if (node !== null) {
