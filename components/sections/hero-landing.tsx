@@ -27,7 +27,7 @@ export async function HeroLanding() {
         </Link>
 
         <h1 className="text-balance font-urban text-3xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
-          Elevate UML & Diagram Modeling with{" "}
+          Diagram as code made eazy with{" "}
           <span className="text-gradient_indigo-purple font-extrabold">AI</span>
         </h1>
 
@@ -35,8 +35,8 @@ export async function HeroLanding() {
           className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
           style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
         >
-          Create, edit and customize professional Mermaid.js and PlantUML
-          diagrams in minutes with EzDiagram.
+          Create, edit and customize Mermaid.js and PlantUML diagrams in seconds
+          with EzDiagram.
         </p>
 
         <div
