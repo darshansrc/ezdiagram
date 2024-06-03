@@ -1,5 +1,11 @@
 "use client";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  MoreHorizontal,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -27,6 +33,7 @@ import {
 import { useRouter } from "next/navigation";
 import { DeleteDiagram } from "./delete-diagram";
 import { RenameDiagram } from "./rename-diagram";
+import Link from "next/link";
 
 export type Diagram = Tables<"diagrams">;
 
@@ -34,7 +41,7 @@ interface DiagramsListProps {
   diagrams: Diagram[] | null;
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 9;
 
 export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,100 +66,110 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
 
   return (
     <>
-      <div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pt-0">
-          {currentDiagrams.map((diagram) => (
-            <Card
-              key={diagram.id}
-              className=" bg-background  cursor-pointer hover:shadow-[0_0_20px_-12px_rgba(80,80,80,0.5)] transition-shadow duration-300 ease-in-out dark:hover:shadow-[0_0_20px_-12px_rgba(100,100,100,0.5)]  rounded-lg"
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pb-6">
+        {currentDiagrams.map((diagram) => (
+          <Card
+            key={diagram.id}
+            className=" bg-background  cursor-pointer hover:shadow-[0_0_20px_-12px_rgba(80,80,80,0.5)] transition-shadow duration-300 ease-in-out dark:hover:shadow-[0_0_20px_-12px_rgba(100,100,100,0.5)]  rounded-lg"
+          >
+            <AspectRatio
+              ratio={16 / 9}
+              onClick={() => router.push(`/edit/${diagram.id}`)}
+              className="overflow-hidden p-2"
             >
-              <AspectRatio
-                ratio={16 / 9}
-                onClick={() => router.push(`/edit/${diagram.id}`)}
-                className="overflow-hidden p-2 rounded-lg"
+              <Suspense
+                fallback={
+                  <Skeleton className="h-full w-full rounded bg-muted/50" />
+                }
               >
-                <Suspense
-                  fallback={<Skeleton className="h-64 w-full rounded-lg" />}
-                >
-                  <MermaidPreview chart={diagram.code as string} />
-                </Suspense>
-              </AspectRatio>
-              <div className="flex px-6 pb-2 flex-row items-center justify-between gap-2 pt-3">
-                <Button
-                  variant={"link"}
-                  className="p-0 m-0"
-                  onClick={() => router.push(`/edit/${diagram.id}`)}
-                >
-                  {diagram.diagram_name}
-                </Button>
-                <Badge variant="outline">{diagram.diagram_language}</Badge>
-              </div>
-              <div className="flex px-6 flex-row justify-between items-center gap-2 mt-0 my-0 pt-0 pb-2">
-                <p className="text-muted-foreground text-sm">
-                  {timesago(diagram.last_updated_at as string)}
-                </p>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button aria-haspopup="true" size="icon" variant="ghost">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="end"
-                    className="bg-background z-40"
+                <MermaidPreview diagramCode={diagram.code as string} />
+              </Suspense>
+            </AspectRatio>
+            <div className="flex px-6 pb-2 flex-row items-center justify-between gap-2 pt-3">
+              <Button
+                variant={"link"}
+                className="p-0 m-0"
+                onClick={() => router.push(`/edit/${diagram.id}`)}
+              >
+                {diagram.diagram_name}
+              </Button>
+              <Badge
+                variant="outline"
+                className="text-muted-foreground font-normal"
+              >
+                {diagram.diagram_language}
+              </Badge>
+            </div>
+            <div className="flex px-6 flex-row justify-between items-center gap-2 mt-0 my-0 pt-0 pb-2">
+              <p className="text-muted-foreground text-sm">
+                {timesago(diagram.last_updated_at as string)}
+              </p>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button aria-haspopup="true" size="icon" variant="ghost">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-background z-40">
+                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="flex items-center space-x-2.5"
+                    onClick={() => {
+                      setSelectedDiagram(diagram.id as string);
+                      setRenameDialogOpen(true);
+                      setSelectedDiagramName(diagram.diagram_name);
+                    }}
                   >
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      className="flex items-center space-x-2.5"
-                      onClick={() => {
-                        setSelectedDiagram(diagram.id as string);
-                        setRenameDialogOpen(true);
-                        setSelectedDiagramName(diagram.diagram_name);
-                      }}
-                    >
-                      <Pencil className="size-3" />
-                      <p className="text-sm">Rename</p>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="flex items-center space-x-2.5"
-                      onClick={() => {
-                        setSelectedDiagram(diagram.id as string);
-                        setDeleteDialogOpen(true);
-                      }}
-                    >
-                      <Trash2 className="size-3 text-red-600 " />
-                      <p className="text-sm text-red-600">Delete</p>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </Card>
-          ))}
-        </div>
+                    <Pencil className="size-3" />
+                    <p className="text-sm">Rename</p>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="flex items-center space-x-2.5"
+                    onClick={() => {
+                      setSelectedDiagram(diagram.id as string);
+                      setDeleteDialogOpen(true);
+                    }}
+                  >
+                    <Trash2 className="size-3 text-red-600 " />
+                    <p className="text-sm text-red-600">Delete</p>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </Card>
+        ))}
       </div>
 
       <div>
         {totalPages > 1 && (
           <div className=" mb-20 flex flex-row items-center justify-between ">
             <Pagination className="flex-end flex w-full justify-end">
-              <PaginationContent>
-                <Button variant={"ghost"} disabled={currentPage === 1}>
-                  <PaginationPrevious
-                    className="px-0"
+              <div>
+                <Button variant={"link"} disabled={currentPage === 1}>
+                  <Link
+                    href={"#"}
+                    className="px-0 flex flex-row items-center gap-1"
                     onClick={() => handlePageChange(currentPage - 1)}
-                  />
+                  >
+                    <ChevronLeft className="size-3 text-muted-foreground" />
+                    Previous
+                  </Link>
                 </Button>
                 <div className="flex-1  items-center  inline-block  text-sm text-muted-foreground text-ellipsis">
                   {currentPage} / {totalPages}
                 </div>
-                <Button variant={"ghost"} disabled={currentPage === totalPages}>
-                  <PaginationNext
-                    className="px-0"
+                <Button variant={"link"} disabled={currentPage === totalPages}>
+                  <Link
+                    href={"#"}
+                    className="px-0 flex flex-row items-center gap-1"
                     onClick={() => handlePageChange(currentPage + 1)}
-                  />
+                  >
+                    Next
+                    <ChevronRight className="size-3 text-muted-foreground" />
+                  </Link>
                 </Button>
-              </PaginationContent>
+              </div>
             </Pagination>
           </div>
         )}

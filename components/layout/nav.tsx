@@ -27,7 +27,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
   }
 
   return (
-    <nav className="grid items-start gap-2">
+    <nav className="grid items-start px-2  text-sm font-medium lg:px-4">
       {items.map((item, index) => {
         const Icon = Icons[item.icon || "arrowRight"];
         return (
@@ -35,8 +35,10 @@ export function DashboardNav({ items }: DashboardNavProps) {
             <Link key={index} href={item.disabled ? "/" : item.href}>
               <span
                 className={cn(
-                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-                  path === item.href ? "bg-accent" : "transparent",
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                  path === item.href
+                    ? "bg-muted text-foreground"
+                    : "bg-background",
                   item.disabled && "cursor-not-allowed opacity-80"
                 )}
               >

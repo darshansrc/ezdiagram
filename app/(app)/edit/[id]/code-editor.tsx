@@ -45,6 +45,7 @@ const CodeEditor = ({ diagramId }: { diagramId: string }) => {
         value={diagramCode}
         minHeight="100%"
         minWidth="100%"
+        placeholder={"Start typing your mermaid.js code here..."}
         className="w-full h-[calc(100vh-50px)] border-none no-scrollbar active:outline-none text-[12px] "
         lang="mermaid"
         extensions={[langs.mermaid()]}
@@ -59,9 +60,9 @@ const CodeEditor = ({ diagramId }: { diagramId: string }) => {
                 settings: {
                   caret: "rgb(180 180 180)",
                   fontFamily: "monospace",
-                  background: "rgb(23, 23, 23)",
-                  gutterBackground: "rgb(23, 23, 23)",
-                  lineHighlight: "#28282850",
+                  background: "rgb(31, 31, 31)",
+                  gutterBackground: "rgb(31, 31, 31)",
+                  lineHighlight: "#33333360",
                   selection: "#036dd626",
                 },
               })

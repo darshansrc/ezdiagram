@@ -70,10 +70,10 @@ const DiagramCanvas = () => {
             color={
               reactFlowBackground === BackgroundVariant.Dots
                 ? theme === "dark"
-                  ? "rgb(40 40 40)"
+                  ? "rgb(50 50 50)"
                   : "rgb(230 230 230)"
                 : theme === "dark"
-                ? "rgb(28 28 28)"
+                ? "rgb(35 35 35)"
                 : "rgb(250 250 250)"
             }
             variant={reactFlowBackground}

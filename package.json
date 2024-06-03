@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "info": "next info",
     "turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
