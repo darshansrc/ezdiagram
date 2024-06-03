@@ -101,7 +101,7 @@ export default function DiagramsList({ diagrams }: DiagramsListProps) {
                     side={"left"}
                   >
                     <Suspense>
-                      <MermaidPreview chart={diagram.code as string} />
+                      <MermaidPreview diagramCode={diagram.code as string} />
                     </Suspense>
                   </HoverCardContent>
                 </HoverCard>

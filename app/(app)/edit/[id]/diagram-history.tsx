@@ -68,7 +68,7 @@ function DiagramHistory({ diagramId }: { diagramId: string }) {
                     >
                       <Suspense>
                         <MermaidPreview
-                          chart={version.diagram_code as string}
+                          diagramCode={version.diagram_code as string}
                         />
                       </Suspense>
                     </HoverCardContent>
