@@ -10,11 +10,7 @@ export function Features() {
     <section>
       <div className="pb-6 pt-28">
         <div className="container max-w-6xl">
-          <HeaderSection
-            label="Use Case"
-            title="Who is this for?"
-            subtitle=""
-          />
+          <HeaderSection label="Use Case" title="Perfect For" subtitle="" />
 
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
@@ -29,7 +25,7 @@ export function Features() {
                 <div className="relative">
                   <p className="mt-0 pb-2  font-medium">{feature.title}</p>
 
-                  <div className="-mb-5 flex gap-3 border-t border-muted text-sm text-muted-foreground  py-2 pb-6 md:-mb-7">
+                  <div className="-mb-5 flex gap-3 border-t  text-sm text-muted-foreground  py-2 pb-6 md:-mb-7">
                     <span>{feature.description}</span>
                   </div>
                 </div>

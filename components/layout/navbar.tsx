@@ -55,14 +55,17 @@ export function NavBar({
             </>
           ) : (
             mounted && (
-              <Button
-                className="gap-2 px-4 rounded-full"
-                variant="default"
-                onClick={() => setIsAuthModalOpen(!isAuthModalOpen)}
-              >
-                <span>Sign In</span>
-                <Icons.arrowRight className="size-4" />
-              </Button>
+              <div className="flex flex-row items-center gap-2">
+                <ModeToggle />
+                <Button
+                  className="gap-2 px-4 rounded-full"
+                  variant="default"
+                  onClick={() => setIsAuthModalOpen(!isAuthModalOpen)}
+                >
+                  <span>Sign In</span>
+                  <Icons.arrowRight className="size-4" />
+                </Button>
+              </div>
             )
           )}
         </div>

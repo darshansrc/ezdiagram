@@ -105,7 +105,7 @@ export function AuthModal() {
                 </DialogTitle>
                 <DialogDescription className="pt-2 pb-6 text-left pl-2">
                   Enter your email and we&apos;ll send you a link to create a
-                  new profile.
+                  new account or login.
                 </DialogDescription>
               </DialogHeader>
               <Input
@@ -153,7 +153,7 @@ export function AuthModal() {
                 </DialogTitle>
                 <DialogDescription className="pt-2 pb-6 text-left pl-2">
                   Enter your email and we&apos;ll send you a link to create a
-                  new profile.
+                  new account or login.
                 </DialogDescription>
               </DialogHeader>
               <Input
