@@ -7,6 +7,7 @@ import { Icons } from "@/components/shared/icons";
 import { ArrowRight } from "lucide-react";
 import RetroGrid from "../magicui/retro-grid";
 import ShimmerButton from "../magicui/shimmer-button";
+import CTAButton from "./cta-button";
 
 export async function HeroLanding() {
   return (
@@ -43,17 +44,7 @@ export async function HeroLanding() {
           className="flex justify-center space-x-2 md:space-x-4"
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
-          <Link
-            href="/dashboard"
-            prefetch={true}
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "gap-2 bg-black z-40 dark:bg-white rounded-full"
-            )}
-          >
-            Start Editing
-            <Icons.arrowRight className="size-4  " />
-          </Link>
+          <CTAButton />
 
           {/* <Link href="/dashboard" prefetch={false}>
             <ShimmerButton className="shadow-2xl  ">
