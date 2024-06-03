@@ -12,8 +12,8 @@ const NotFound = () => {
         could not be found.
       </h4>
       <p className="text-muted-foreground text-sm text-center">
-        The page you're looking for does not exist. <br /> But don't worry, you
-        still do.
+        The page you&apos;re looking for does not exist. <br /> But don't worry,
+        you still do.
       </p>
       <Link href={"/"} className="mt-4">
         <Button

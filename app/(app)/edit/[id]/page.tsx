@@ -30,14 +30,14 @@ const Editor = async ({
   if (!user || !isCreator || !diagram) {
     return (
       <div className="flex flex-col items-center gap-2 justify-center w-full h-screen">
-        <OctagonAlert className="size-10 mb-2 text-yellow-400 dark:text-yellow-600" />{" "}
+        <OctagonAlert className="size-10 mb-2 text-yellow-400 dark:text-yellow-600" />
         <h4 className="text-lg font-medium flex flex-row items-center">
           404 <span className="text-muted-foreground  px-1">|</span> This page
           could not be found.
         </h4>
         <p className="text-muted-foreground text-sm text-center">
-          Oops! The diagram you’re looking for isn’t here, <br /> or it hasn’t
-          been shared with you.
+          Oops! The diagram you&apos;re looking for isn&apos;t here, <br /> or
+          it hasn&apos;t been shared with you.
         </p>
         <Link href={"/"} className="mt-4">
           <Button
