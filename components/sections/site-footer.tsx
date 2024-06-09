@@ -37,13 +37,9 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
 
       <div className="border-t py-2">
         <div className="container flex items-center justify-between">
-          <p className="text-left text-balance text-sm text-muted-foreground w-1/3">
+          <p className="text-left flex flex-row  text-balance text-[12px] text-muted-foreground w-full whitespace-nowrap">
             &copy; 2024 EzDiagram. All rights reserved.
           </p>
-
-          <div className="flex items-center justify-end gap-3 w-1/3">
-            <ModeToggle />
-          </div>
         </div>
       </div>
     </footer>

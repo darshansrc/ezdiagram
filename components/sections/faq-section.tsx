@@ -74,7 +74,7 @@ export function FaqSection() {
           contact us for personalized help."
       />
 
-      <Accordion type="single" collapsible className="my-12 w-full">
+      <Accordion type="single" collapsible className="my-12 w-full ">
         {pricingFaqData.map((faqItem) => (
           <AccordionItem key={faqItem.id} value={faqItem.id}>
             <AccordionTrigger>{faqItem.question}</AccordionTrigger>

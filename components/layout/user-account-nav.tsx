@@ -41,7 +41,7 @@ export function UserAccountNav({ user }: { user: User | null }) {
           <UserCircle className="size-6" />
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="dark:bg-neutral-900">
+      <DropdownMenuContent align="end" className="dark:bg-background">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
             {user?.user_metadata.name && (
