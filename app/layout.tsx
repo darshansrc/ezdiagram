@@ -82,7 +82,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Analytics />
           <SpeedInsights />
           <Toaster
-            position="top-right"
+            position="top-center"
             toastOptions={{
               className:
                 "dark:bg-neutral-900 dark:text-white text-sm shadow-none border animate-none",

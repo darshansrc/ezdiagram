@@ -70,7 +70,7 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
         {currentDiagrams.map((diagram) => (
           <Card
             key={diagram.id}
-            className=" bg-background  cursor-pointer hover:shadow-[0_0_20px_-12px_rgba(80,80,80,0.5)] transition-shadow duration-300 ease-in-out dark:hover:shadow-[0_0_20px_-12px_rgba(100,100,100,0.5)]  rounded-lg"
+            className=" bg-background  cursor-pointer  shadow-none  rounded-lg"
           >
             <AspectRatio
               ratio={16 / 9}

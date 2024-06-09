@@ -52,3 +52,17 @@ export async function updateName(name: string) {
 
   return data;
 }
+
+export async function deleteUser() {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase.auth.admin.deleteUser(user?.id);
+
+  if (error) {
+    console.error("Error deleting user:", error);
+    return error.message;
+  }
+}
