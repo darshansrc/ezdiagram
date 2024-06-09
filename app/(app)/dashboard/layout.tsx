@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Workflow } from "lucide-react";
+import { Plus, User, Users, Workflow } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -45,8 +45,23 @@ export default async function Dashboard({
               </Link>
             </div>
             <div className="flex-1 mt-4">
-              <DashboardNav items={dashboardConfig.sidebarNav} />
+              <div className="mb-6">
+                <p className="text-[12px] mb-2 flex flex-row items-center gap-2 pl-6 text-muted-foreground py-2 font-medium">
+                  <User className="size-4" /> Your Account
+                </p>
+                <DashboardNav items={dashboardConfig.sidebarNav} />
+              </div>
+
+              <div>
+                <div className="flex flex-row justify-between items-center">
+                  <p className="text-[12px] pl-6 flex flex-row items-center gap-2 text-muted-foreground py-2 font-medium">
+                    <Users className="size-4" /> Teams
+                  </p>
+                  <Plus className="h-4 w-4 text-muted-foreground mr-4" />
+                </div>
+              </div>
             </div>
+
             <div className="mt-auto p-4">
               <Card className="bg-background">
                 <CardHeader className="p-2 pt-0 md:p-4">
