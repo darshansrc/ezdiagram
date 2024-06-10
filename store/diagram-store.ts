@@ -35,7 +35,7 @@ const createDiagramStore: StateCreator<DiagramStore> = (set, get) => ({
         (diagram) => diagram.id !== id
       );
       set({ diagrams: newDiagrams });
-      toast("Diagram deleted successfully!");
+      toast.success("Diagram deleted successfully!");
     }
   },
   updateDiagramName: (id: string, newName: string) => {
@@ -48,7 +48,7 @@ const createDiagramStore: StateCreator<DiagramStore> = (set, get) => ({
         return diagram;
       });
       set({ diagrams: updatedDiagrams });
-      toast("Diagram updated successfully!");
+      toast.success("Diagram updated successfully!");
     }
   },
 });

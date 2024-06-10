@@ -2,6 +2,7 @@
 import {
   ChevronLeft,
   ChevronRight,
+  Maximize2,
   MoreHorizontal,
   Pencil,
   Trash2,
@@ -34,6 +35,8 @@ import { useRouter } from "next/navigation";
 import { DeleteDiagram } from "./delete-diagram";
 import { RenameDiagram } from "./rename-diagram";
 import Link from "next/link";
+import { Dialog, DialogContent } from "../ui/dialog";
+import MermaidFullScreen from "@/app/(app)/edit/[id]/mermaid-full-screen";
 
 export type Diagram = Tables<"diagrams">;
 
@@ -57,6 +60,9 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
   const [selectedDiagramName, setSelectedDiagramName] = useState<string | null>(
     ""
   );
+  const [fullScreenDialogOpen, setFullScreenDialogOpen] =
+    useState<boolean>(false);
+  const [selectedDiagramCode, setSelectedDiagramCode] = useState<string>("");
 
   const currentDiagrams = diagrams?.slice(startIndex, endIndex) || [];
 
@@ -113,6 +119,16 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
                 <DropdownMenuContent align="end" className="bg-background z-40">
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="flex items-center space-x-2.5"
+                    onClick={() => {
+                      setSelectedDiagramCode(diagram.code as string);
+                      setFullScreenDialogOpen(true);
+                    }}
+                  >
+                    <Maximize2 className="size-3 " />
+                    <p className="text-sm">Preview</p>
+                  </DropdownMenuItem>
                   <DropdownMenuItem
                     className="flex items-center space-x-2.5"
                     onClick={() => {
@@ -187,6 +203,14 @@ export default function DiagramsGrid({ diagrams }: DiagramsListProps) {
         setRenameDialogOpen={setRenameDialogOpen}
         diagramName={selectedDiagramName}
       />
+      <Dialog
+        open={fullScreenDialogOpen}
+        onOpenChange={setFullScreenDialogOpen}
+      >
+        <DialogContent className="w-[90vw] p-0 flex min-w-[90vw] max-w-[90vw] h-[90vh] max-h-[90vh] overflow-scroll ">
+          <MermaidFullScreen code={selectedDiagramCode} />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

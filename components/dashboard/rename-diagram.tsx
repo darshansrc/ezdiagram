@@ -50,7 +50,7 @@ export function RenameDiagram({
             <AlertDialogTitle>Rename Diagram</AlertDialogTitle>
             <AlertDialogDescription>
               <Input
-                className="rounded-full"
+                className="rounded-full text-foreground"
                 defaultValue={diagramName as string}
                 onChange={(e) => setNewName(e.target.value)}
               />

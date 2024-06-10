@@ -7,10 +7,11 @@ import {
   BackgroundVariant,
   Controls,
 } from "reactflow";
+import MermaidPreviewRenderer from "./mermaid-preview-renderer";
 
 const MermaidFullScreen = ({ code }: { code: string }) => {
   const MermaidNode = () => {
-    return code && <MermaidRenderer diagramCode={code} />;
+    return code && <MermaidPreviewRenderer diagramCode={code} />;
   };
 
   const initialNodes = [
@@ -41,8 +42,8 @@ const MermaidFullScreen = ({ code }: { code: string }) => {
         selectionOnDrag={false}
         nodesDraggable={false}
       >
-        <Background variant={BackgroundVariant.Dots} />
         <Controls showInteractive={false} />
+        <Background variant={BackgroundVariant.Dots} gap={12} size={0.5} />
       </ReactFlow>
     </div>
   );
